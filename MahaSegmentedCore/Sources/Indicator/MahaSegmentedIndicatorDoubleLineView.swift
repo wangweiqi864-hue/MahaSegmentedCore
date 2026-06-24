@@ -32,20 +32,7 @@ open class MahaSegmentedIndicatorDoubleLineView: MahaSegmentedIndicatorBaseView 
         otherLineView.backgroundColor = indicatorColor
         selectedLineView.layer.cornerRadius = getIndicatorCornerRadius(itemFrame: model.currentSelectedItemFrame)
         otherLineView.layer.cornerRadius = getIndicatorCornerRadius(itemFrame: model.currentSelectedItemFrame)
-
-        let width = getIndicatorWidth(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
-        let height = getIndicatorHeight(itemFrame: model.currentSelectedItemFrame)
-        let x = model.currentSelectedItemFrame.origin.x + (model.currentSelectedItemFrame.size.width - width)/2
-        var y: CGFloat = 0
-        switch indicatorPosition {
-        case .top:
-            y = verticalOffset
-        case .bottom:
-            y = model.currentSelectedItemFrame.size.height - height - verticalOffset
-        case .center:
-            y = (model.currentSelectedItemFrame.size.height - height)/2 + verticalOffset
-        }
-        selectedLineView.frame = CGRect(x: x, y: y, width: width, height: height)
+        selectedLineView.frame = indicatorFrame(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
         otherLineView.frame = selectedLineView.frame
     }
 
@@ -67,10 +54,10 @@ open class MahaSegmentedIndicatorDoubleLineView: MahaSegmentedIndicatorBaseView 
         let leftMinWidth = leftMaxWidth*minLineWidthPercent
         let rightMinWidth = rightMaxWidth*minLineWidthPercent
 
-        let leftWidth: CGFloat = MahaSegmentedViewTool.interpolate(from: leftMaxWidth, to: leftMinWidth, percent: CGFloat(percent))
-        let rightWidth: CGFloat = MahaSegmentedViewTool.interpolate(from: rightMinWidth, to: rightMaxWidth, percent: CGFloat(percent))
-        let leftAlpha: CGFloat = MahaSegmentedViewTool.interpolate(from: 1, to: 0, percent: CGFloat(percent))
-        let rightAlpha: CGFloat = MahaSegmentedViewTool.interpolate(from: 0, to: 1, percent: CGFloat(percent))
+        let leftWidth: CGFloat = MahaSegmentedViewTool.interpolate(from: leftMaxWidth, to: leftMinWidth, percent: percent)
+        let rightWidth: CGFloat = MahaSegmentedViewTool.interpolate(from: rightMinWidth, to: rightMaxWidth, percent: percent)
+        let leftAlpha: CGFloat = MahaSegmentedViewTool.interpolate(from: 1, to: 0, percent: percent)
+        let rightAlpha: CGFloat = MahaSegmentedViewTool.interpolate(from: 0, to: 1, percent: percent)
 
         if model.currentSelectedIndex == model.leftIndex {
             selectedLineView.bounds.size.width = leftWidth
@@ -80,7 +67,7 @@ open class MahaSegmentedIndicatorDoubleLineView: MahaSegmentedIndicatorBaseView 
             otherLineView.bounds.size.width = rightWidth
             otherLineView.center = rightCenter
             otherLineView.alpha = rightAlpha
-        }else {
+        } else {
             otherLineView.bounds.size.width = leftWidth
             otherLineView.center = leftCenter
             otherLineView.alpha = leftAlpha

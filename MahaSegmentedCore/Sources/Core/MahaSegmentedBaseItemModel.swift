@@ -14,7 +14,7 @@ open class MahaSegmentedBaseItemModel {
     open var isSelected: Bool = false
     open var itemWidth: CGFloat = 0
     /// 指示器视图Frame转换到cell
-    open var indicatorConvertToItemFrame: CGRect = CGRect.zero
+    open var indicatorConvertToItemFrame: CGRect = .zero
     open var isItemTransitionEnabled: Bool = true
     open var isSelectedAnimable: Bool = false
     open var selectedAnimationDuration: TimeInterval = 0

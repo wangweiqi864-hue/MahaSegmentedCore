@@ -43,56 +43,24 @@ open class MahaSegmentedTitleImageDataSource: MahaSegmentedTitleDataSource {
     open override func preferredRefreshItemModel(_ itemModel: MahaSegmentedBaseItemModel, at index: Int, selectedIndex: Int) {
         super.preferredRefreshItemModel(itemModel, at: index, selectedIndex: selectedIndex)
 
-        guard let itemModel = itemModel as? MahaSegmentedTitleImageItemModel else {
+        guard let titleImageItemModel = itemModel as? MahaSegmentedTitleImageItemModel else {
             return
         }
 
-        itemModel.titleImageType = titleImageType
-        itemModel.normalImageInfo = normalImageInfos?[index]
-        itemModel.selectedImageInfo = selectedImageInfos?[index]
-        itemModel.loadImageClosure = loadImageClosure
-        itemModel.imageSize = imageSize
-        itemModel.isImageZoomEnabled = isImageZoomEnabled
-        itemModel.imageNormalZoomScale = 1
-        itemModel.imageSelectedZoomScale = imageSelectedZoomScale
-        itemModel.titleImageSpacing = titleImageSpacing
-        if index == selectedIndex {
-            itemModel.imageCurrentZoomScale = itemModel.imageSelectedZoomScale
-        }else {
-            itemModel.imageCurrentZoomScale = itemModel.imageNormalZoomScale
-        }
+        configureTitleImageItemModel(titleImageItemModel, at: index)
+        titleImageItemModel.imageCurrentZoomScale = index == selectedIndex ? titleImageItemModel.imageSelectedZoomScale : titleImageItemModel.imageNormalZoomScale
     }
 
     open override func preferredSegmentedView(_ segmentedView: MahaSegmentedView, widthForItemAt index: Int) -> CGFloat {
         var width = super.preferredSegmentedView(segmentedView, widthForItemAt: index)
         if itemWidth == MahaSegmentedViewAutomaticDimension {
-            switch titleImageType {
-            case .leftImage, .rightImage:
-                width += titleImageSpacing + imageSize.width
-            case .topImage, .bottomImage:
-                width = max(itemWidth, imageSize.width)
-            case .onlyImage:
-                width = imageSize.width
-            case .onlyTitle:
-                break
-            }
+            width = contentWidth(withBaseWidth: width)
         }
         return width
     }
 
     public override func segmentedView(_ segmentedView: MahaSegmentedView, widthForItemContentAt index: Int) -> CGFloat {
-        var width = super.segmentedView(segmentedView, widthForItemContentAt: index)
-        switch titleImageType {
-        case .leftImage, .rightImage:
-            width += titleImageSpacing + imageSize.width
-        case .topImage, .bottomImage:
-            width = max(itemWidth, imageSize.width)
-        case .onlyImage:
-            width = imageSize.width
-        case .onlyTitle:
-            break
-        }
-        return width
+        return contentWidth(withBaseWidth: super.segmentedView(segmentedView, widthForItemContentAt: index))
     }
 
     //MARK: - MahaSegmentedViewDataSource
@@ -101,8 +69,7 @@ open class MahaSegmentedTitleImageDataSource: MahaSegmentedTitleDataSource {
     }
 
     open override func segmentedView(_ segmentedView: MahaSegmentedView, cellForItemAt index: Int) -> MahaSegmentedBaseCell {
-        let cell = segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
-        return cell
+        return segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
     }
 
     open override func refreshItemModel(_ segmentedView: MahaSegmentedView, leftItemModel: MahaSegmentedBaseItemModel, rightItemModel: MahaSegmentedBaseItemModel, percent: CGFloat) {
@@ -120,11 +87,37 @@ open class MahaSegmentedTitleImageDataSource: MahaSegmentedTitleDataSource {
     open override func refreshItemModel(_ segmentedView: MahaSegmentedView, currentSelectedItemModel: MahaSegmentedBaseItemModel, willSelectedItemModel: MahaSegmentedBaseItemModel, selectedType: MahaSegmentedViewItemSelectedType) {
         super.refreshItemModel(segmentedView, currentSelectedItemModel: currentSelectedItemModel, willSelectedItemModel: willSelectedItemModel, selectedType: selectedType)
 
-        guard let myCurrentSelectedItemModel = currentSelectedItemModel as? MahaSegmentedTitleImageItemModel, let myWillSelectedItemModel = willSelectedItemModel as? MahaSegmentedTitleImageItemModel else {
+        guard let currentImageItemModel = currentSelectedItemModel as? MahaSegmentedTitleImageItemModel,
+              let nextImageItemModel = willSelectedItemModel as? MahaSegmentedTitleImageItemModel else {
             return
         }
 
-        myCurrentSelectedItemModel.imageCurrentZoomScale = myCurrentSelectedItemModel.imageNormalZoomScale
-        myWillSelectedItemModel.imageCurrentZoomScale = myWillSelectedItemModel.imageSelectedZoomScale
+        currentImageItemModel.imageCurrentZoomScale = currentImageItemModel.imageNormalZoomScale
+        nextImageItemModel.imageCurrentZoomScale = nextImageItemModel.imageSelectedZoomScale
+    }
+
+    private func configureTitleImageItemModel(_ itemModel: MahaSegmentedTitleImageItemModel, at index: Int) {
+        itemModel.titleImageType = titleImageType
+        itemModel.normalImageInfo = normalImageInfos?[index]
+        itemModel.selectedImageInfo = selectedImageInfos?[index]
+        itemModel.loadImageClosure = loadImageClosure
+        itemModel.imageSize = imageSize
+        itemModel.isImageZoomEnabled = isImageZoomEnabled
+        itemModel.imageNormalZoomScale = 1
+        itemModel.imageSelectedZoomScale = imageSelectedZoomScale
+        itemModel.titleImageSpacing = titleImageSpacing
+    }
+
+    private func contentWidth(withBaseWidth baseWidth: CGFloat) -> CGFloat {
+        switch titleImageType {
+        case .leftImage, .rightImage:
+            return baseWidth + titleImageSpacing + imageSize.width
+        case .topImage, .bottomImage:
+            return max(itemWidth, imageSize.width)
+        case .onlyImage:
+            return imageSize.width
+        case .onlyTitle:
+            return baseWidth
+        }
     }
 }

@@ -29,39 +29,38 @@ open class MahaSegmentedTitleAttributeDataSource: MahaSegmentedBaseDataSource {
     open override func preferredRefreshItemModel(_ itemModel: MahaSegmentedBaseItemModel, at index: Int, selectedIndex: Int) {
         super.preferredRefreshItemModel(itemModel, at: index, selectedIndex: selectedIndex)
 
-        guard let myItemModel = itemModel as? MahaSegmentedTitleAttributeItemModel else {
+        guard let attributeItemModel = itemModel as? MahaSegmentedTitleAttributeItemModel else {
             return
         }
 
-        myItemModel.attributedTitle = attributedTitles[index]
-        myItemModel.selectedAttributedTitle = selectedAttributedTitles?[index]
-        myItemModel.textWidth = widthForTitle(myItemModel.attributedTitle, selectedTitle: myItemModel.selectedAttributedTitle)
-        myItemModel.titleNumberOfLines = titleNumberOfLines
+        attributeItemModel.attributedTitle = attributedTitles[index]
+        attributeItemModel.selectedAttributedTitle = selectedAttributedTitles?[index]
+        attributeItemModel.textWidth = widthForTitle(attributeItemModel.attributedTitle, selectedTitle: attributeItemModel.selectedAttributedTitle)
+        attributeItemModel.titleNumberOfLines = titleNumberOfLines
     }
 
     open func widthForTitle(_ title: NSAttributedString?, selectedTitle: NSAttributedString?) -> CGFloat {
-        let attriText = selectedTitle != nil ? selectedTitle : title
-        guard let text = attriText else {
+        guard let targetTitle = selectedTitle ?? title else {
             return 0
         }
-        if widthForTitleClosure != nil {
-            return widthForTitleClosure!(text)
-        }else {
-            let textWidth = text.boundingRect(with: CGSize(width: CGFloat.infinity, height: CGFloat.infinity), options: NSStringDrawingOptions.init(rawValue: NSStringDrawingOptions.usesLineFragmentOrigin.rawValue | NSStringDrawingOptions.usesFontLeading.rawValue), context: nil).size.width
-            return CGFloat(ceilf(Float(textWidth)))
+        if let widthForTitleClosure {
+            return widthForTitleClosure(targetTitle)
         }
+        let textWidth = targetTitle.boundingRect(
+            with: CGSize(width: CGFloat.infinity, height: CGFloat.infinity),
+            options: NSStringDrawingOptions(rawValue: NSStringDrawingOptions.usesLineFragmentOrigin.rawValue | NSStringDrawingOptions.usesFontLeading.rawValue),
+            context: nil
+        ).size.width
+        return CGFloat(ceilf(Float(textWidth)))
     }
 
     /// 因为该方法会被频繁调用，所以应该在`preferredRefreshItemModel( _ itemModel: MahaSegmentedBaseItemModel, at index: Int, selectedIndex: Int)`方法里面，根据数据源计算好文字宽度，然后缓存起来。该方法直接使用已经计算好的文字宽度即可。
     open override func preferredSegmentedView(_ segmentedView: MahaSegmentedView, widthForItemAt index: Int) -> CGFloat {
-        var width: CGFloat = 0
         if itemWidth == MahaSegmentedViewAutomaticDimension {
-            let myItemModel = dataSource[index] as! MahaSegmentedTitleAttributeItemModel
-            width = myItemModel.textWidth + itemWidthIncrement
-        }else {
-            width = itemWidth + itemWidthIncrement
+            let itemModel = dataSource[index] as! MahaSegmentedTitleAttributeItemModel
+            return itemModel.textWidth + itemWidthIncrement
         }
-        return width
+        return itemWidth + itemWidthIncrement
     }
 
     //MARK: - MahaSegmentedViewDataSource
@@ -70,7 +69,6 @@ open class MahaSegmentedTitleAttributeDataSource: MahaSegmentedBaseDataSource {
     }
 
     open override func segmentedView(_ segmentedView: MahaSegmentedView, cellForItemAt index: Int) -> MahaSegmentedBaseCell {
-        let cell = segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
-        return cell
+        return segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
     }
 }

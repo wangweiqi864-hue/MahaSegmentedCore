@@ -49,47 +49,25 @@ open class MahaSegmentedTitleDataSource: MahaSegmentedBaseDataSource {
     open override func preferredRefreshItemModel( _ itemModel: MahaSegmentedBaseItemModel, at index: Int, selectedIndex: Int) {
         super.preferredRefreshItemModel(itemModel, at: index, selectedIndex: selectedIndex)
 
-        guard let myItemModel = itemModel as? MahaSegmentedTitleItemModel else {
+        guard let titleItemModel = itemModel as? MahaSegmentedTitleItemModel else {
             return
         }
 
-        myItemModel.title = titles[index]
-        myItemModel.textWidth = widthForTitle(myItemModel.title ?? "", index)
-        myItemModel.titleNumberOfLines = innerTitleNumberOfLines(at: index)
-        myItemModel.isSelectedAnimable = isSelectedAnimable
-        myItemModel.titleNormalColor = innerTitleNormalColor(at: index)
-        myItemModel.titleSelectedColor = innerTitleSelectedColor(at: index)
-        myItemModel.titleNormalFont = innerTitleNormalFont(at: index)
-        if let selectedFont = innerTitleSelectedFont(at: index) {
-            myItemModel.titleSelectedFont = selectedFont
-        } else {
-            myItemModel.titleSelectedFont = innerTitleNormalFont(at: index)
-        }
-        myItemModel.isTitleZoomEnabled = isTitleZoomEnabled
-        myItemModel.isTitleStrokeWidthEnabled = isTitleStrokeWidthEnabled
-        myItemModel.isTitleMaskEnabled = isTitleMaskEnabled
-        myItemModel.titleNormalZoomScale = 1
-        myItemModel.titleSelectedZoomScale = titleSelectedZoomScale
-        myItemModel.titleSelectedStrokeWidth = titleSelectedStrokeWidth
-        myItemModel.titleNormalStrokeWidth = 0
-        if index == selectedIndex {
-            myItemModel.titleCurrentColor = innerTitleSelectedColor(at: index)
-            myItemModel.titleCurrentZoomScale = titleSelectedZoomScale
-            myItemModel.titleCurrentStrokeWidth = titleSelectedStrokeWidth
-        }else {
-            myItemModel.titleCurrentColor = innerTitleNormalColor(at: index)
-            myItemModel.titleCurrentZoomScale = 1
-            myItemModel.titleCurrentStrokeWidth = 0
-        }
+        configureTitleItemModel(titleItemModel, at: index)
+        updateTitleItemModelState(titleItemModel, isSelected: index == selectedIndex)
     }
 
     open func widthForTitle(_ title: String, _ index: Int) -> CGFloat {
-        if widthForTitleClosure != nil {
-            return widthForTitleClosure!(title)
-        }else {
-            let textWidth = NSString(string: title).boundingRect(with: CGSize(width: CGFloat.infinity, height: CGFloat.infinity), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font : innerTitleNormalFont(at: index)], context: nil).size.width
-            return CGFloat(ceilf(Float(textWidth)))
+        if let widthForTitleClosure {
+            return widthForTitleClosure(title)
         }
+        let textWidth = NSString(string: title).boundingRect(
+            with: CGSize(width: CGFloat.infinity, height: CGFloat.infinity),
+            options: [.usesFontLeading, .usesLineFragmentOrigin],
+            attributes: [.font: resolvedTitleNormalFont(at: index)],
+            context: nil
+        ).size.width
+        return CGFloat(ceilf(Float(textWidth)))
     }
 
     /// 因为该方法会被频繁调用，所以应该在`preferredRefreshItemModel( _ itemModel: MahaSegmentedBaseItemModel, at index: Int, selectedIndex: Int)`方法里面，根据数据源计算好文字宽度，然后缓存起来。该方法直接使用已经计算好的文字宽度即可。
@@ -109,8 +87,7 @@ open class MahaSegmentedTitleDataSource: MahaSegmentedBaseDataSource {
     }
 
     open override func segmentedView(_ segmentedView: MahaSegmentedView, cellForItemAt index: Int) -> MahaSegmentedBaseCell {
-        let cell = segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
-        return cell
+        return segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
     }
 
     public override func segmentedView(_ segmentedView: MahaSegmentedView, widthForItemContentAt index: Int) -> CGFloat {
@@ -148,55 +125,75 @@ open class MahaSegmentedTitleDataSource: MahaSegmentedBaseDataSource {
     open override func refreshItemModel(_ segmentedView: MahaSegmentedView, currentSelectedItemModel: MahaSegmentedBaseItemModel, willSelectedItemModel: MahaSegmentedBaseItemModel, selectedType: MahaSegmentedViewItemSelectedType) {
         super.refreshItemModel(segmentedView, currentSelectedItemModel: currentSelectedItemModel, willSelectedItemModel: willSelectedItemModel, selectedType: selectedType)
 
-        guard let myCurrentSelectedItemModel = currentSelectedItemModel as? MahaSegmentedTitleItemModel, let myWillSelectedItemModel = willSelectedItemModel as? MahaSegmentedTitleItemModel else {
+        guard let currentTitleItemModel = currentSelectedItemModel as? MahaSegmentedTitleItemModel,
+              let nextTitleItemModel = willSelectedItemModel as? MahaSegmentedTitleItemModel else {
             return
         }
 
-        myCurrentSelectedItemModel.titleCurrentColor = myCurrentSelectedItemModel.titleNormalColor
-        myCurrentSelectedItemModel.titleCurrentZoomScale = myCurrentSelectedItemModel.titleNormalZoomScale
-        myCurrentSelectedItemModel.titleCurrentStrokeWidth = myCurrentSelectedItemModel.titleNormalStrokeWidth
-        myCurrentSelectedItemModel.indicatorConvertToItemFrame = CGRect.zero
-
-        myWillSelectedItemModel.titleCurrentColor = myWillSelectedItemModel.titleSelectedColor
-        myWillSelectedItemModel.titleCurrentZoomScale = myWillSelectedItemModel.titleSelectedZoomScale
-        myWillSelectedItemModel.titleCurrentStrokeWidth = myWillSelectedItemModel.titleSelectedStrokeWidth
+        updateTitleItemModelState(currentTitleItemModel, isSelected: false)
+        currentTitleItemModel.indicatorConvertToItemFrame = .zero
+        updateTitleItemModelState(nextTitleItemModel, isSelected: true)
     }
     
     // MARK: - Configuration
     
-    private func innerTitleNumberOfLines(at index: Int) -> Int {
+    private func configureTitleItemModel(_ itemModel: MahaSegmentedTitleItemModel, at index: Int) {
+        let title = titles[index]
+        itemModel.title = title
+        itemModel.textWidth = widthForTitle(title, index)
+        itemModel.titleNumberOfLines = resolvedTitleNumberOfLines(at: index)
+        itemModel.isSelectedAnimable = isSelectedAnimable
+        itemModel.titleNormalColor = resolvedTitleNormalColor(at: index)
+        itemModel.titleSelectedColor = resolvedTitleSelectedColor(at: index)
+        itemModel.titleNormalFont = resolvedTitleNormalFont(at: index)
+        itemModel.titleSelectedFont = resolvedTitleSelectedFont(at: index) ?? itemModel.titleNormalFont
+        itemModel.isTitleZoomEnabled = isTitleZoomEnabled
+        itemModel.isTitleStrokeWidthEnabled = isTitleStrokeWidthEnabled
+        itemModel.isTitleMaskEnabled = isTitleMaskEnabled
+        itemModel.titleNormalZoomScale = 1
+        itemModel.titleSelectedZoomScale = titleSelectedZoomScale
+        itemModel.titleSelectedStrokeWidth = titleSelectedStrokeWidth
+        itemModel.titleNormalStrokeWidth = 0
+    }
+
+    private func updateTitleItemModelState(_ itemModel: MahaSegmentedTitleItemModel, isSelected: Bool) {
+        itemModel.titleCurrentColor = isSelected ? itemModel.titleSelectedColor : itemModel.titleNormalColor
+        itemModel.titleCurrentZoomScale = isSelected ? itemModel.titleSelectedZoomScale : itemModel.titleNormalZoomScale
+        itemModel.titleCurrentStrokeWidth = isSelected ? itemModel.titleSelectedStrokeWidth : itemModel.titleNormalStrokeWidth
+    }
+
+    private func resolvedTitleNumberOfLines(at index: Int) -> Int {
         if let configuration {
             return configuration.titleNumberOfLines(at: index)
-        } else {
-            return titleNumberOfLines
         }
+        return titleNumberOfLines
     }
-    private func innerTitleNormalColor(at index: Int) -> UIColor {
+
+    private func resolvedTitleNormalColor(at index: Int) -> UIColor {
         if let configuration {
             return configuration.titleNormalColor(at: index)
-        } else {
-            return titleNormalColor
         }
+        return titleNormalColor
     }
-    private func innerTitleSelectedColor(at index: Int) -> UIColor {
+
+    private func resolvedTitleSelectedColor(at index: Int) -> UIColor {
         if let configuration {
             return configuration.titleSelectedColor(at: index)
-        } else {
-            return titleSelectedColor
         }
+        return titleSelectedColor
     }
-    private func innerTitleNormalFont(at index: Int) -> UIFont {
+
+    private func resolvedTitleNormalFont(at index: Int) -> UIFont {
         if let configuration {
             return configuration.titleNormalFont(at: index)
-        } else {
-            return titleNormalFont
         }
+        return titleNormalFont
     }
-    private func innerTitleSelectedFont(at index: Int) -> UIFont? {
+
+    private func resolvedTitleSelectedFont(at index: Int) -> UIFont? {
         if let configuration {
             return configuration.titleSelectedFont(at: index)
-        } else {
-            return titleSelectedFont
         }
+        return titleSelectedFont
     }
 }

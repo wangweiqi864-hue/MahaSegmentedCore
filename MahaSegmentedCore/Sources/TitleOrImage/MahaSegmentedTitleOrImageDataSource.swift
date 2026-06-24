@@ -29,13 +29,13 @@ open class MahaSegmentedTitleOrImageDataSource: MahaSegmentedTitleDataSource {
     open override func preferredRefreshItemModel( _ itemModel: MahaSegmentedBaseItemModel, at index: Int, selectedIndex: Int) {
         super.preferredRefreshItemModel(itemModel, at: index, selectedIndex: selectedIndex)
 
-        guard let itemModel = itemModel as? MahaSegmentedTitleOrImageItemModel else {
+        guard let titleOrImageItemModel = itemModel as? MahaSegmentedTitleOrImageItemModel else {
             return
         }
 
-        itemModel.selectedImageInfo = selectedImageInfos?[index]
-        itemModel.loadImageClosure = loadImageClosure
-        itemModel.imageSize = imageSize
+        titleOrImageItemModel.selectedImageInfo = selectedImageInfos?[index]
+        titleOrImageItemModel.loadImageClosure = loadImageClosure
+        titleOrImageItemModel.imageSize = imageSize
     }
 
     //MARK: - MahaSegmentedViewDataSource
@@ -44,8 +44,7 @@ open class MahaSegmentedTitleOrImageDataSource: MahaSegmentedTitleDataSource {
     }
 
     open override func segmentedView(_ segmentedView: MahaSegmentedView, cellForItemAt index: Int) -> MahaSegmentedBaseCell {
-        let cell = segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
-        return cell
+        return segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
     }
 
 }

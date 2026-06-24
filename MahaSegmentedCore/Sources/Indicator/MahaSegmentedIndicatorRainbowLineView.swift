@@ -17,7 +17,7 @@ open class MahaSegmentedIndicatorRainbowLineView: MahaSegmentedIndicatorLineView
     open override func refreshIndicatorState(model: MahaSegmentedIndicatorSelectedParams) {
         super.refreshIndicatorState(model: model)
 
-        backgroundColor = indicatorColors[model.currentSelectedIndex]
+        backgroundColor = color(at: model.currentSelectedIndex)
     }
 
     open override func contentScrollViewDidScroll(model: MahaSegmentedIndicatorTransitionParams) {
@@ -27,13 +27,20 @@ open class MahaSegmentedIndicatorRainbowLineView: MahaSegmentedIndicatorLineView
             return
         }
 
-        backgroundColor = MahaSegmentedViewTool.interpolateColor(from: indicatorColors[model.leftIndex], to: indicatorColors[model.rightIndex], percent: model.percent)
+        backgroundColor = MahaSegmentedViewTool.interpolateColor(
+            from: color(at: model.leftIndex),
+            to: color(at: model.rightIndex),
+            percent: model.percent
+        )
     }
 
     open override func selectItem(model: MahaSegmentedIndicatorSelectedParams) {
         super.selectItem(model: model)
 
-        backgroundColor = indicatorColors[model.currentSelectedIndex]
+        backgroundColor = color(at: model.currentSelectedIndex)
     }
 
+    private func color(at index: Int) -> UIColor {
+        return indicatorColors[index]
+    }
 }

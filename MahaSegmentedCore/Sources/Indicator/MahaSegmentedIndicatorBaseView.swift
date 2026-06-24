@@ -56,7 +56,7 @@ open class MahaSegmentedIndicatorBaseView: UIView, MahaSegmentedIndicatorProtoco
 
     public func getIndicatorCornerRadius(itemFrame: CGRect) -> CGFloat {
         if indicatorCornerRadius == MahaSegmentedViewAutomaticDimension {
-            return getIndicatorHeight(itemFrame: itemFrame)/2
+            return getIndicatorHeight(itemFrame: itemFrame) / 2
         }
         return indicatorCornerRadius
     }
@@ -65,7 +65,7 @@ open class MahaSegmentedIndicatorBaseView: UIView, MahaSegmentedIndicatorProtoco
         if indicatorWidth == MahaSegmentedViewAutomaticDimension {
             if isIndicatorWidthSameAsItemContent {
                 return itemContentWidth + indicatorWidthIncrement
-            }else {
+            } else {
                 return itemFrame.size.width + indicatorWidthIncrement
             }
         }
@@ -80,20 +80,37 @@ open class MahaSegmentedIndicatorBaseView: UIView, MahaSegmentedIndicatorProtoco
     }
 
     public func canHandleTransition(model: MahaSegmentedIndicatorTransitionParams) -> Bool {
-        if model.percent == 0 || !isScrollEnabled {
-            //model.percent等于0时不需要处理，会调用selectItem(model: MahaSegmentedIndicatorParamsModel)方法处理
-            //isScrollEnabled为false不需要处理
-            return false
-        }
-        return true
+        //model.percent等于0时不需要处理，会调用selectItem(model: MahaSegmentedIndicatorParamsModel)方法处理
+        //isScrollEnabled为false不需要处理
+        return model.percent != 0 && isScrollEnabled
     }
 
     public func canSelectedWithAnimation(model: MahaSegmentedIndicatorSelectedParams) -> Bool {
-        if isScrollEnabled && (model.selectedType == .click || model.selectedType == .code) {
-            //允许滚动且选中类型是点击或代码选中，才进行动画过渡
-            return true
+        //允许滚动且选中类型是点击或代码选中，才进行动画过渡
+        return isScrollEnabled && (model.selectedType == .click || model.selectedType == .code)
+    }
+
+    public func indicatorFrame(itemFrame: CGRect, itemContentWidth: CGFloat) -> CGRect {
+        let width = getIndicatorWidth(itemFrame: itemFrame, itemContentWidth: itemContentWidth)
+        let height = getIndicatorHeight(itemFrame: itemFrame)
+        let x = itemFrame.origin.x + (itemFrame.size.width - width) / 2
+        let y = indicatorOriginY(itemFrame: itemFrame, indicatorHeight: height)
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
+
+    public func indicatorOriginY(itemFrame: CGRect, indicatorHeight: CGFloat) -> CGFloat {
+        switch indicatorPosition {
+        case .top:
+            return verticalOffset
+        case .bottom:
+            return itemFrame.size.height - indicatorHeight - verticalOffset
+        case .center:
+            return (itemFrame.size.height - indicatorHeight) / 2 + verticalOffset
         }
-        return false
+    }
+
+    public func centeredIndicatorX(itemFrame: CGRect, indicatorWidth: CGFloat) -> CGFloat {
+        return itemFrame.origin.x + (itemFrame.size.width - indicatorWidth) / 2
     }
 
     //MARK: - MahaSegmentedIndicatorProtocol

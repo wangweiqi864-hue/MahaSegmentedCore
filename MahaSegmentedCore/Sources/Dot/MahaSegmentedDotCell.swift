@@ -20,23 +20,27 @@ open class MahaSegmentedDotCell: MahaSegmentedTitleCell {
     open override func layoutSubviews() {
         super.layoutSubviews()
 
-        guard let myItemModel = itemModel as? MahaSegmentedDotItemModel else {
+        guard let dotItemModel = itemModel as? MahaSegmentedDotItemModel else {
             return
         }
 
-        dotView.center = CGPoint(x: titleLabel.frame.maxX + myItemModel.dotOffset.x, y: titleLabel.frame.minY + myItemModel.dotOffset.y)
+        dotView.center = CGPoint(x: titleLabel.frame.maxX + dotItemModel.dotOffset.x, y: titleLabel.frame.minY + dotItemModel.dotOffset.y)
     }
 
     open override func reloadData(itemModel: MahaSegmentedBaseItemModel, selectedType: MahaSegmentedViewItemSelectedType) {
         super.reloadData(itemModel: itemModel, selectedType: selectedType )
 
-        guard let myItemModel = itemModel as? MahaSegmentedDotItemModel else {
+        guard let dotItemModel = itemModel as? MahaSegmentedDotItemModel else {
             return
         }
 
-        dotView.backgroundColor = myItemModel.dotColor
-        dotView.bounds = CGRect(x: 0, y: 0, width: myItemModel.dotSize.width, height: myItemModel.dotSize.height)
-        dotView.isHidden = !myItemModel.dotState
-        dotView.layer.cornerRadius = myItemModel.dotCornerRadius
+        applyDotStyle(using: dotItemModel)
+    }
+
+    private func applyDotStyle(using itemModel: MahaSegmentedDotItemModel) {
+        dotView.backgroundColor = itemModel.dotColor
+        dotView.bounds = CGRect(origin: .zero, size: itemModel.dotSize)
+        dotView.isHidden = !itemModel.dotState
+        dotView.layer.cornerRadius = itemModel.dotCornerRadius
     }
 }

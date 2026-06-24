@@ -27,15 +27,18 @@ open class MahaSegmentedTitleAttributeCell: MahaSegmentedBaseCell {
     open override func reloadData(itemModel: MahaSegmentedBaseItemModel, selectedType: MahaSegmentedViewItemSelectedType) {
         super.reloadData(itemModel: itemModel, selectedType: selectedType )
 
-        guard let myItemModel = itemModel as? MahaSegmentedTitleAttributeItemModel else {
+        guard let attributeItemModel = itemModel as? MahaSegmentedTitleAttributeItemModel else {
             return
         }
 
-        titleLabel.numberOfLines = myItemModel.titleNumberOfLines
-        if myItemModel.isSelected && myItemModel.selectedAttributedTitle != nil {
-            titleLabel.attributedText = myItemModel.selectedAttributedTitle
-        }else {
-            titleLabel.attributedText = myItemModel.attributedTitle
+        titleLabel.numberOfLines = attributeItemModel.titleNumberOfLines
+        titleLabel.attributedText = displayedTitle(using: attributeItemModel)
+    }
+
+    private func displayedTitle(using itemModel: MahaSegmentedTitleAttributeItemModel) -> NSAttributedString? {
+        if itemModel.isSelected, let selectedAttributedTitle = itemModel.selectedAttributedTitle {
+            return selectedAttributedTitle
         }
+        return itemModel.attributedTitle
     }
 }

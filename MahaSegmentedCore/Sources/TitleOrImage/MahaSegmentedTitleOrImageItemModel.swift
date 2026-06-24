@@ -11,5 +11,5 @@ import UIKit
 open class MahaSegmentedTitleOrImageItemModel: MahaSegmentedTitleItemModel {
     open var selectedImageInfo: String?
     open var loadImageClosure: MahaSegmentedLoadImageClosure?
-    open var imageSize: CGSize = CGSize.zero
+    open var imageSize: CGSize = .zero
 }

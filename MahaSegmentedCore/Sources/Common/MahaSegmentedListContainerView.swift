@@ -91,8 +91,8 @@ open class MahaSegmentedListContainerView: UIView, MahaSegmentedViewListContaine
         }
     }()
     private lazy var containerVC = MahaSegmentedListContainerViewController()
-    private var willAppearIndex: Int = -1
-    private var willDisappearIndex: Int = -1
+    private var pendingAppearIndex: Int = -1
+    private var pendingDisappearIndex: Int = -1
 
     public init(dataSource: MahaSegmentedListContainerViewDataSource, type: MahaSegmentedListContainerType = .scrollView) {
         self.dataSource = dataSource
@@ -225,8 +225,7 @@ open class MahaSegmentedListContainerView: UIView, MahaSegmentedViewListContaine
         guard checkIndexValid(index) else {
             return
         }
-        willAppearIndex = -1
-        willDisappearIndex = -1
+        resetPendingTransitionIndexes()
         if currentIndex != index {
             listWillDisappear(at: currentIndex)
             listWillAppear(at: index)
@@ -266,90 +265,33 @@ open class MahaSegmentedListContainerView: UIView, MahaSegmentedViewListContaine
 
     //MARK: - Private
     func initListIfNeeded(at index: Int) {
-        guard let dataSource = dataSource else { return }
-        if dataSource.listContainerView?(self, canInitListAt: index) == false {
+        guard canInitializeList(at: index) else {
             return
         }
-        var existedList = validListDict[index]
-        if existedList != nil {
-            //列表已经创建好了
+        if validListDict[index] != nil {
             return
         }
-        existedList = dataSource.listContainerView(self, initListAt: index)
-        guard let list = existedList else {
+        guard let list = createList(at: index) else {
             return
         }
-        if let vc = list as? UIViewController {
-            containerVC.addChild(vc)
-        }
-        validListDict[index] = list
-        if type == .scrollView {
-            list.listView().frame = CGRect(x: CGFloat(index)*scrollView.bounds.size.width, y: 0, width: scrollView.bounds.size.width, height: scrollView.bounds.size.height)
-            scrollView.addSubview(list.listView())
-            
-            if segmentedViewShouldRTLLayout() {
-                segmentedView(horizontalFlipForView: list.listView())
-            }else{
-                list.listView().transform = .identity
-            }
-        }else {
-            let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0))
-            cell?.contentView.subviews.forEach { $0.removeFromSuperview() }
-            list.listView().frame = cell?.contentView.bounds ?? CGRect.zero
-            cell?.contentView.addSubview(list.listView())
-        }
+        mountListView(list, at: index)
     }
 
     private func listWillAppear(at index: Int) {
-        guard let dataSource = dataSource else { return }
         guard checkIndexValid(index) else {
             return
         }
-        var existedList = validListDict[index]
-        if existedList != nil {
-            existedList?.listWillAppear?()
-            if let vc = existedList as? UIViewController {
-                vc.beginAppearanceTransition(true, animated: false)
-            }
-        }else {
-            //当前列表未被创建（页面初始化或通过点击触发的listWillAppear）
-            guard dataSource.listContainerView?(self, canInitListAt: index) != false else {
+        let list: MahaSegmentedListContainerViewListDelegate?
+        if let cachedList = validListDict[index] {
+            list = cachedList
+        } else {
+            guard canInitializeList(at: index), let createdList = createList(at: index) else {
                 return
             }
-            existedList = dataSource.listContainerView(self, initListAt: index)
-            guard let list = existedList else {
-                return
-            }
-            if let vc = list as? UIViewController {
-                containerVC.addChild(vc)
-            }
-            validListDict[index] = list
-            if type == .scrollView {
-                if list.listView().superview == nil {
-                    list.listView().frame = CGRect(x: CGFloat(index)*scrollView.bounds.size.width, y: 0, width: scrollView.bounds.size.width, height: scrollView.bounds.size.height)
-                    scrollView.addSubview(list.listView())
-                    
-                    if segmentedViewShouldRTLLayout() {
-                        segmentedView(horizontalFlipForView: list.listView())
-                    }else{
-                        list.listView().transform = .identity
-                    }
-                }
-                list.listWillAppear?()
-                if let vc = list as? UIViewController {
-                    vc.beginAppearanceTransition(true, animated: false)
-                }
-            }else {
-                let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0))
-                cell?.contentView.subviews.forEach { $0.removeFromSuperview() }
-                list.listView().frame = cell?.contentView.bounds ?? CGRect.zero
-                cell?.contentView.addSubview(list.listView())
-                list.listWillAppear?()
-                if let vc = list as? UIViewController {
-                    vc.beginAppearanceTransition(true, animated: false)
-                }
-            }
+            mountListView(createdList, at: index)
+            list = createdList
         }
+        beginAppearance(for: list, appearing: true)
     }
 
     private func listDidAppear(at index: Int) {
@@ -357,39 +299,27 @@ open class MahaSegmentedListContainerView: UIView, MahaSegmentedViewListContaine
             return
         }
         currentIndex = index
-        let list = validListDict[index]
-        list?.listDidAppear?()
-        if let vc = list as? UIViewController {
-            vc.endAppearanceTransition()
-        }
+        endAppearance(for: validListDict[index], appearing: true)
     }
 
     private func listWillDisappear(at index: Int) {
         guard checkIndexValid(index) else {
             return
         }
-        let list = validListDict[index]
-        list?.listWillDisappear?()
-        if let vc = list as? UIViewController {
-            vc.beginAppearanceTransition(false, animated: false)
-        }
+        beginAppearance(for: validListDict[index], appearing: false)
     }
 
     private func listDidDisappear(at index: Int) {
         guard checkIndexValid(index) else {
             return
         }
-        let list = validListDict[index]
-        list?.listDidDisappear?()
-        if let vc = list as? UIViewController {
-            vc.endAppearanceTransition()
-        }
+        endAppearance(for: validListDict[index], appearing: false)
     }
 
     private func checkIndexValid(_ index: Int) -> Bool {
         guard let dataSource = dataSource else { return false }
         let count = dataSource.numberOfLists(in: self)
-        if count <= 0 || index >= count {
+        if count <= 0 || index < 0 || index >= count {
             return false
         }
         return true
@@ -397,27 +327,103 @@ open class MahaSegmentedListContainerView: UIView, MahaSegmentedViewListContaine
 
     private func listDidAppearOrDisappear(scrollView: UIScrollView) {
         let currentIndexPercent = scrollView.contentOffset.x/scrollView.bounds.size.width
-        if willAppearIndex != -1 || willDisappearIndex != -1 {
-            let disappearIndex = willDisappearIndex
-            let appearIndex = willAppearIndex
-            if willAppearIndex > willDisappearIndex {
+        if pendingAppearIndex != -1 || pendingDisappearIndex != -1 {
+            let disappearIndex = pendingDisappearIndex
+            let appearIndex = pendingAppearIndex
+            if pendingAppearIndex > pendingDisappearIndex {
                 //将要出现的列表在右边
-                if currentIndexPercent >= CGFloat(willAppearIndex) {
-                    willDisappearIndex = -1
-                    willAppearIndex = -1
+                if currentIndexPercent >= CGFloat(pendingAppearIndex) {
+                    resetPendingTransitionIndexes()
                     listDidDisappear(at: disappearIndex)
                     listDidAppear(at: appearIndex)
                 }
-            }else {
+            } else {
                 //将要出现的列表在左边
-                if currentIndexPercent <= CGFloat(willAppearIndex) {
-                    willDisappearIndex = -1
-                    willAppearIndex = -1
+                if currentIndexPercent <= CGFloat(pendingAppearIndex) {
+                    resetPendingTransitionIndexes()
                     listDidDisappear(at: disappearIndex)
                     listDidAppear(at: appearIndex)
                 }
             }
         }
+    }
+
+    private func canInitializeList(at index: Int) -> Bool {
+        return dataSource?.listContainerView?(self, canInitListAt: index) != false
+    }
+
+    private func createList(at index: Int) -> MahaSegmentedListContainerViewListDelegate? {
+        guard let list = dataSource?.listContainerView(self, initListAt: index) else {
+            return nil
+        }
+        if let viewController = list as? UIViewController {
+            containerVC.addChild(viewController)
+        }
+        validListDict[index] = list
+        return list
+    }
+
+    private func mountListView(_ list: MahaSegmentedListContainerViewListDelegate, at index: Int) {
+        if type == .scrollView {
+            attachListViewToScrollView(list, at: index)
+        } else {
+            attachListViewToCollectionCell(list, at: index)
+        }
+    }
+
+    private func attachListViewToScrollView(_ list: MahaSegmentedListContainerViewListDelegate, at index: Int) {
+        let listView = list.listView()
+        listView.frame = CGRect(x: CGFloat(index) * scrollView.bounds.size.width, y: 0, width: scrollView.bounds.size.width, height: scrollView.bounds.size.height)
+        if listView.superview !== scrollView {
+            listView.removeFromSuperview()
+            scrollView.addSubview(listView)
+        }
+        applyRTLTransformIfNeeded(to: listView)
+    }
+
+    private func attachListViewToCollectionCell(_ list: MahaSegmentedListContainerViewListDelegate, at index: Int) {
+        guard let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) else {
+            return
+        }
+        cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+        let listView = list.listView()
+        listView.frame = cell.contentView.bounds
+        cell.contentView.addSubview(listView)
+    }
+
+    private func applyRTLTransformIfNeeded(to view: UIView) {
+        if segmentedViewShouldRTLLayout() {
+            segmentedView(horizontalFlipForView: view)
+        } else {
+            view.transform = .identity
+        }
+    }
+
+    private func beginAppearance(for list: MahaSegmentedListContainerViewListDelegate?, appearing: Bool) {
+        if appearing {
+            list?.listWillAppear?()
+        } else {
+            list?.listWillDisappear?()
+        }
+        if let viewController = list as? UIViewController {
+            viewController.beginAppearanceTransition(appearing, animated: false)
+        }
+    }
+
+    private func endAppearance(for list: MahaSegmentedListContainerViewListDelegate?, appearing: Bool) {
+        if appearing {
+            list?.listDidAppear?()
+        } else {
+            list?.listDidDisappear?()
+        }
+        if let viewController = list as? UIViewController {
+            viewController.endAppearanceTransition()
+        }
+    }
+
+    private func resetPendingTransitionIndexes() {
+        pendingAppearIndex = -1
+        pendingDisappearIndex = -1
     }
 }
 
@@ -451,7 +457,7 @@ extension MahaSegmentedListContainerView: UICollectionViewDataSource, UICollecti
         let maxCount = Int(round(scrollView.contentSize.width/scrollView.bounds.size.width))
         var leftIndex = Int(floor(Double(percent)))
         leftIndex = max(0, min(maxCount - 1, leftIndex))
-        let rightIndex = leftIndex + 1;
+        let rightIndex = leftIndex + 1
         if percent < 0 || rightIndex >= maxCount {
             listDidAppearOrDisappear(scrollView: scrollView)
             return
@@ -461,30 +467,30 @@ extension MahaSegmentedListContainerView: UICollectionViewDataSource, UICollecti
             //当前选中的在右边，用户正在从右边往左边滑动
             if validListDict[leftIndex] == nil && remainderRatio < (1 - initListPercent) {
                 initListIfNeeded(at: leftIndex)
-            }else if validListDict[leftIndex] != nil {
-                if willAppearIndex == -1 {
-                    willAppearIndex = leftIndex;
-                    listWillAppear(at: willAppearIndex)
+            } else if validListDict[leftIndex] != nil {
+                if pendingAppearIndex == -1 {
+                    pendingAppearIndex = leftIndex
+                    listWillAppear(at: pendingAppearIndex)
                 }
             }
 
-            if willDisappearIndex == -1 {
-                willDisappearIndex = rightIndex
-                listWillDisappear(at: willDisappearIndex)
+            if pendingDisappearIndex == -1 {
+                pendingDisappearIndex = rightIndex
+                listWillDisappear(at: pendingDisappearIndex)
             }
-        }else {
+        } else {
             //当前选中的在左边，用户正在从左边往右边滑动
             if validListDict[rightIndex] == nil && remainderRatio > initListPercent {
                 initListIfNeeded(at: rightIndex)
-            }else if validListDict[rightIndex] != nil {
-                if willAppearIndex == -1 {
-                    willAppearIndex = rightIndex
-                    listWillAppear(at: willAppearIndex)
+            } else if validListDict[rightIndex] != nil {
+                if pendingAppearIndex == -1 {
+                    pendingAppearIndex = rightIndex
+                    listWillAppear(at: pendingAppearIndex)
                 }
             }
-            if willDisappearIndex == -1 {
-                willDisappearIndex = leftIndex
-                listWillDisappear(at: willDisappearIndex)
+            if pendingDisappearIndex == -1 {
+                pendingDisappearIndex = leftIndex
+                listWillDisappear(at: pendingDisappearIndex)
             }
         }
         listDidAppearOrDisappear(scrollView: scrollView)
@@ -492,13 +498,12 @@ extension MahaSegmentedListContainerView: UICollectionViewDataSource, UICollecti
 
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         //滑动到一半又取消滑动处理
-        if willAppearIndex != -1 || willDisappearIndex != -1 {
-            listWillDisappear(at: willAppearIndex)
-            listWillAppear(at: willDisappearIndex)
-            listDidDisappear(at: willAppearIndex)
-            listDidAppear(at: willDisappearIndex)
-            willDisappearIndex = -1
-            willAppearIndex = -1
+        if pendingAppearIndex != -1 || pendingDisappearIndex != -1 {
+            listWillDisappear(at: pendingAppearIndex)
+            listWillAppear(at: pendingDisappearIndex)
+            listDidDisappear(at: pendingAppearIndex)
+            listDidAppear(at: pendingDisappearIndex)
+            resetPendingTransitionIndexes()
         }
     }
 }

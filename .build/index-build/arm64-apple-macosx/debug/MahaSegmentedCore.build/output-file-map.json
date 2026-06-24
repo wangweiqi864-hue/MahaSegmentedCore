@@ -1,0 +1,320 @@
+{
+  "": {
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/primary.swiftdeps"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/AttributeTitle/MahaSegmentedTitleAttributeCell.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeCell.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeCell.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeCell~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeCell.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeCell.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/AttributeTitle/MahaSegmentedTitleAttributeDataSource.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeDataSource.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeDataSource.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeDataSource~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeDataSource.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeDataSource.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/AttributeTitle/MahaSegmentedTitleAttributeItemModel.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeItemModel.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeItemModel.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeItemModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeItemModel.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleAttributeItemModel.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Common/MahaSegmentedAnimator.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedAnimator.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedAnimator.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedAnimator~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedAnimator.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedAnimator.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Common/MahaSegmentedListContainerView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedListContainerView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedListContainerView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedListContainerView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedListContainerView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedListContainerView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Common/MahaSegmentedRTLLayout.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedRTLLayout.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedRTLLayout.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedRTLLayout~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedRTLLayout.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedRTLLayout.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Common/MahaSegmentedViewTool.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedViewTool.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedViewTool.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedViewTool~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedViewTool.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedViewTool.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Core/MahaSegmentedBaseCell.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseCell.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseCell.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseCell~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseCell.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseCell.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Core/MahaSegmentedBaseDataSource.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseDataSource.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseDataSource.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseDataSource~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseDataSource.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseDataSource.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Core/MahaSegmentedBaseItemModel.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseItemModel.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseItemModel.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseItemModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseItemModel.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedBaseItemModel.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Core/MahaSegmentedCollectionView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedCollectionView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedCollectionView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedCollectionView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedCollectionView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedCollectionView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Core/MahaSegmentedView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Dot/MahaSegmentedDotCell.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotCell.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotCell.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotCell~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotCell.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotCell.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Dot/MahaSegmentedDotDataSource.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotDataSource.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotDataSource.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotDataSource~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotDataSource.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotDataSource.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Dot/MahaSegmentedDotItemModel.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotItemModel.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotItemModel.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotItemModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotItemModel.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedDotItemModel.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedComponetGradientView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedComponetGradientView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedComponetGradientView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedComponetGradientView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedComponetGradientView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedComponetGradientView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorBackgroundView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorBackgroundView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorBackgroundView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorBackgroundView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorBackgroundView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorBackgroundView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorBaseView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorBaseView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorBaseView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorBaseView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorBaseView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorBaseView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorDotLineView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorDotLineView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorDotLineView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorDotLineView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorDotLineView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorDotLineView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorDoubleLineView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorDoubleLineView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorDoubleLineView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorDoubleLineView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorDoubleLineView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorDoubleLineView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorGradientLineView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorGradientLineView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorGradientLineView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorGradientLineView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorGradientLineView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorGradientLineView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorGradientView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorGradientView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorGradientView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorGradientView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorGradientView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorGradientView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorImageView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorImageView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorImageView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorImageView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorImageView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorImageView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorLineView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorLineView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorLineView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorLineView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorLineView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorLineView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorParams.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorParams.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorParams.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorParams~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorParams.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorParams.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorProtocol.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorProtocol.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorProtocol.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorProtocol~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorProtocol.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorProtocol.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorRainbowLineView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorRainbowLineView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorRainbowLineView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorRainbowLineView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorRainbowLineView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorRainbowLineView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Indicator/MahaSegmentedIndicatorTriangleView.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorTriangleView.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorTriangleView.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorTriangleView~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorTriangleView.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedIndicatorTriangleView.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Number/MahaSegmentedNumberCell.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberCell.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberCell.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberCell~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberCell.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberCell.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Number/MahaSegmentedNumberDataSource.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberDataSource.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberDataSource.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberDataSource~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberDataSource.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberDataSource.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Number/MahaSegmentedNumberItemModel.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberItemModel.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberItemModel.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberItemModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberItemModel.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedNumberItemModel.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Title/MahaSegmentedTitleCell.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleCell.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleCell.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleCell~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleCell.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleCell.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Title/MahaSegmentedTitleDataSource.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleDataSource.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleDataSource.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleDataSource~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleDataSource.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleDataSource.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Title/MahaSegmentedTitleDynamicConfiguration.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleDynamicConfiguration.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleDynamicConfiguration.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleDynamicConfiguration~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleDynamicConfiguration.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleDynamicConfiguration.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/Title/MahaSegmentedTitleItemModel.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleItemModel.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleItemModel.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleItemModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleItemModel.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleItemModel.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/TitleGradient/MahaSegmentedTitleGradientCell.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientCell.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientCell.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientCell~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientCell.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientCell.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/TitleGradient/MahaSegmentedTitleGradientDataSource.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientDataSource.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientDataSource.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientDataSource~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientDataSource.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientDataSource.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/TitleGradient/MahaSegmentedTitleGradientItemModel.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientItemModel.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientItemModel.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientItemModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientItemModel.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleGradientItemModel.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/TitleImage/MahaSegmentedTitleImageCell.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageCell.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageCell.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageCell~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageCell.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageCell.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/TitleImage/MahaSegmentedTitleImageDataSource.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageDataSource.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageDataSource.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageDataSource~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageDataSource.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageDataSource.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/TitleImage/MahaSegmentedTitleImageItemModel.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageItemModel.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageItemModel.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageItemModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageItemModel.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleImageItemModel.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/TitleOrImage/MahaSegmentedTitleOrImageCell.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageCell.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageCell.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageCell~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageCell.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageCell.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/TitleOrImage/MahaSegmentedTitleOrImageDataSource.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageDataSource.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageDataSource.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageDataSource~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageDataSource.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageDataSource.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/MahaSegmentedCore/Sources/TitleOrImage/MahaSegmentedTitleOrImageItemModel.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageItemModel.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageItemModel.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageItemModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageItemModel.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/MahaSegmentedTitleOrImageItemModel.dia"
+  },
+  "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/DerivedSources/resource_bundle_accessor.swift": {
+    "dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/resource_bundle_accessor.d",
+    "object": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/resource_bundle_accessor.swift.o",
+    "swiftmodule": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/resource_bundle_accessor~partial.swiftmodule",
+    "swift-dependencies": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/resource_bundle_accessor.swiftdeps",
+    "diagnostics": "/Users/wwq/Desktop/PrivatePods/MahaSegmentedCore/.build/index-build/arm64-apple-macosx/debug/MahaSegmentedCore.build/resource_bundle_accessor.dia"
+  }
+}

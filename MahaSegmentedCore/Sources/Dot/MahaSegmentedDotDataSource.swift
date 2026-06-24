@@ -27,19 +27,15 @@ open class MahaSegmentedDotDataSource: MahaSegmentedTitleDataSource {
     open override func preferredRefreshItemModel(_ itemModel: MahaSegmentedBaseItemModel, at index: Int, selectedIndex: Int) {
         super.preferredRefreshItemModel(itemModel, at: index, selectedIndex: selectedIndex)
 
-        guard let itemModel = itemModel as? MahaSegmentedDotItemModel else {
+        guard let dotItemModel = itemModel as? MahaSegmentedDotItemModel else {
             return
         }
 
-        itemModel.dotOffset = dotOffset
-        itemModel.dotState = dotStates[index]
-        itemModel.dotColor = dotColor
-        itemModel.dotSize = dotSize
-        if dotCornerRadius == MahaSegmentedViewAutomaticDimension {
-            itemModel.dotCornerRadius = dotSize.height/2
-        }else {
-            itemModel.dotCornerRadius = dotCornerRadius
-        }
+        dotItemModel.dotOffset = dotOffset
+        dotItemModel.dotState = dotStates[index]
+        dotItemModel.dotColor = dotColor
+        dotItemModel.dotSize = dotSize
+        dotItemModel.dotCornerRadius = resolvedDotCornerRadius()
     }
 
     //MARK: - MahaSegmentedViewDataSource
@@ -48,7 +44,13 @@ open class MahaSegmentedDotDataSource: MahaSegmentedTitleDataSource {
     }
 
     open override func segmentedView(_ segmentedView: MahaSegmentedView, cellForItemAt index: Int) -> MahaSegmentedBaseCell {
-        let cell = segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
-        return cell
+        return segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
+    }
+
+    private func resolvedDotCornerRadius() -> CGFloat {
+        if dotCornerRadius == MahaSegmentedViewAutomaticDimension {
+            return dotSize.height / 2
+        }
+        return dotCornerRadius
     }
 }

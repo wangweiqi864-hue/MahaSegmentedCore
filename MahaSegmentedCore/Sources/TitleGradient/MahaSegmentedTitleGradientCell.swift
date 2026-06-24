@@ -36,35 +36,17 @@ open class MahaSegmentedTitleGradientCell: MahaSegmentedTitleCell {
     open override func reloadData(itemModel: MahaSegmentedBaseItemModel, selectedType: MahaSegmentedViewItemSelectedType) {
         super.reloadData(itemModel: itemModel, selectedType: selectedType)
 
-        guard let myItemModel = itemModel as? MahaSegmentedTitleGradientItemModel else {
+        guard let gradientItemModel = itemModel as? MahaSegmentedTitleGradientItemModel else {
             return
         }
 
-        if myItemModel.isSelectedAnimable && canStartSelectedAnimation(itemModel: myItemModel, selectedType: selectedType) {
-            let closure: MahaSegmentedCellSelectedAnimationClosure = {[weak self] (percent) in
-                if myItemModel.isSelected {
-                    myItemModel.titleCurrentGradientColors = MahaSegmentedViewTool.interpolateColors(from: myItemModel.titleNormalGradientColors, to: myItemModel.titleSelectedGradientColors, percent: percent)
-                }else {
-                    myItemModel.titleCurrentGradientColors = MahaSegmentedViewTool.interpolateColors(from: myItemModel.titleSelectedGradientColors, to: myItemModel.titleNormalGradientColors, percent: percent)
-                }
-                CATransaction.begin()
-                CATransaction.setDisableActions(true)
-                self?.gradientLayer.colors = myItemModel.titleCurrentGradientColors
-                CATransaction.commit()
-                self?.setNeedsLayout()
-                self?.layoutIfNeeded()
-            }
-            appendSelectedAnimationClosure(closure: closure)
+        if gradientItemModel.isSelectedAnimable && canStartSelectedAnimation(itemModel: gradientItemModel, selectedType: selectedType) {
+            appendSelectedAnimationClosure(closure: gradientColorAnimationClosure(for: gradientItemModel))
             canStartSelectedAnimation = true
-            startSelectedAnimationIfNeeded(itemModel: myItemModel, selectedType: selectedType)
+            startSelectedAnimationIfNeeded(itemModel: gradientItemModel, selectedType: selectedType)
             canStartSelectedAnimation = false
-        }else {
-            CATransaction.begin()
-            CATransaction.setDisableActions(true)
-            gradientLayer.startPoint = myItemModel.titleGradientStartPoint
-            gradientLayer.endPoint = myItemModel.titleGradientEndPoint
-            gradientLayer.colors = myItemModel.titleCurrentGradientColors
-            CATransaction.commit()
+        } else {
+            updateGradientLayer(using: gradientItemModel)
         }
     }
 
@@ -72,5 +54,25 @@ open class MahaSegmentedTitleGradientCell: MahaSegmentedTitleCell {
         if canStartSelectedAnimation {
             super.startSelectedAnimationIfNeeded(itemModel: itemModel, selectedType: selectedType)
         }
+    }
+
+    private func gradientColorAnimationClosure(for itemModel: MahaSegmentedTitleGradientItemModel) -> MahaSegmentedCellSelectedAnimationClosure {
+        return { [weak self] percent in
+            itemModel.titleCurrentGradientColors = itemModel.isSelected
+                ? MahaSegmentedViewTool.interpolateColors(from: itemModel.titleNormalGradientColors, to: itemModel.titleSelectedGradientColors, percent: percent)
+                : MahaSegmentedViewTool.interpolateColors(from: itemModel.titleSelectedGradientColors, to: itemModel.titleNormalGradientColors, percent: percent)
+            self?.updateGradientLayer(using: itemModel)
+            self?.setNeedsLayout()
+            self?.layoutIfNeeded()
+        }
+    }
+
+    private func updateGradientLayer(using itemModel: MahaSegmentedTitleGradientItemModel) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        gradientLayer.startPoint = itemModel.titleGradientStartPoint
+        gradientLayer.endPoint = itemModel.titleGradientEndPoint
+        gradientLayer.colors = itemModel.titleCurrentGradientColors
+        CATransaction.commit()
     }
 }

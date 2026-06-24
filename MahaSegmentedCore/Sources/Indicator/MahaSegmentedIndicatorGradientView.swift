@@ -29,7 +29,7 @@ open class MahaSegmentedIndicatorGradientView: MahaSegmentedIndicatorBaseView {
         return CAGradientLayer.self
     }
     
-    private var gradientMaskLayerFrame = CGRect.zero
+    private var gradientMaskFrame: CGRect = .zero
 
     open override func commonInit() {
         super.commonInit()
@@ -50,25 +50,12 @@ open class MahaSegmentedIndicatorGradientView: MahaSegmentedIndicatorBaseView {
         super.refreshIndicatorState(model: model)
 
         gradientLayer.colors = gradientColors
-
-        let width = getIndicatorWidth(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
-        let height = getIndicatorHeight(itemFrame: model.currentSelectedItemFrame)
-        let x = model.currentSelectedItemFrame.origin.x + (model.currentSelectedItemFrame.size.width - width)/2
-        var y: CGFloat = 0
-        switch indicatorPosition {
-        case .top:
-            y = verticalOffset
-        case .bottom:
-            y = model.currentSelectedItemFrame.size.height - height - verticalOffset
-        case .center:
-            y = (model.currentSelectedItemFrame.size.height - height)/2 + verticalOffset
-        }
-        gradientMaskLayerFrame = CGRect(x: x, y: y, width: width, height: height)
-        let path = UIBezierPath(roundedRect: gradientMaskLayerFrame, cornerRadius: getIndicatorCornerRadius(itemFrame: model.currentSelectedItemFrame))
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        gradientMaskLayer.path = path.cgPath
-        CATransaction.commit()
+        gradientMaskFrame = indicatorFrame(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
+        updateGradientMaskPath(
+            frame: gradientMaskFrame,
+            cornerRadius: getIndicatorCornerRadius(itemFrame: model.currentSelectedItemFrame),
+            disableActions: true
+        )
         if let collectionViewContentSize = model.collectionViewContentSize {
             frame = CGRect(x: 0, y: 0, width: collectionViewContentSize.width, height: collectionViewContentSize.height)
         }
@@ -81,51 +68,57 @@ open class MahaSegmentedIndicatorGradientView: MahaSegmentedIndicatorBaseView {
             return
         }
 
-        let rightItemFrame = model.rightItemFrame
         let leftItemFrame = model.leftItemFrame
+        let rightItemFrame = model.rightItemFrame
         let percent = model.percent
-        var targetWidth = getIndicatorWidth(itemFrame: leftItemFrame, itemContentWidth: model.leftItemContentWidth)
-
-        let leftWidth = targetWidth
+        let leftWidth = getIndicatorWidth(itemFrame: leftItemFrame, itemContentWidth: model.leftItemContentWidth)
         let rightWidth = getIndicatorWidth(itemFrame: rightItemFrame, itemContentWidth: model.rightItemContentWidth)
-        let leftX = leftItemFrame.origin.x + (leftItemFrame.size.width - leftWidth)/2
-        let rightX = rightItemFrame.origin.x + (rightItemFrame.size.width - rightWidth)/2
-        let targetX = MahaSegmentedViewTool.interpolate(from: leftX, to: rightX, percent: CGFloat(percent))
+        let leftX = centeredIndicatorX(itemFrame: leftItemFrame, indicatorWidth: leftWidth)
+        let rightX = centeredIndicatorX(itemFrame: rightItemFrame, indicatorWidth: rightWidth)
+        let targetX = MahaSegmentedViewTool.interpolate(from: leftX, to: rightX, percent: percent)
+        var targetWidth = leftWidth
         if indicatorWidth == MahaSegmentedViewAutomaticDimension {
-            targetWidth = MahaSegmentedViewTool.interpolate(from: leftWidth, to: rightWidth, percent: CGFloat(percent))
+            targetWidth = MahaSegmentedViewTool.interpolate(from: leftWidth, to: rightWidth, percent: percent)
         }
 
-        gradientMaskLayerFrame.origin.x = targetX
-        gradientMaskLayerFrame.size.width = targetWidth
-        let path = UIBezierPath(roundedRect: gradientMaskLayerFrame, cornerRadius: getIndicatorCornerRadius(itemFrame: leftItemFrame))
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        gradientMaskLayer.path = path.cgPath
-        CATransaction.commit()
+        gradientMaskFrame.origin.x = targetX
+        gradientMaskFrame.size.width = targetWidth
+        updateGradientMaskPath(
+            frame: gradientMaskFrame,
+            cornerRadius: getIndicatorCornerRadius(itemFrame: leftItemFrame),
+            disableActions: true
+        )
     }
 
     open override func selectItem(model: MahaSegmentedIndicatorSelectedParams) {
         super.selectItem(model: model)
 
-        let width = getIndicatorWidth(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
-        var toFrame = gradientMaskLayerFrame
-        toFrame.origin.x = model.currentSelectedItemFrame.origin.x + (model.currentSelectedItemFrame.size.width - width)/2
-        toFrame.size.width = width
-        let path = UIBezierPath(roundedRect: toFrame, cornerRadius: getIndicatorCornerRadius(itemFrame: model.currentSelectedItemFrame))
+        let targetWidth = getIndicatorWidth(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
+        var targetFrame = gradientMaskFrame
+        targetFrame.origin.x = centeredIndicatorX(itemFrame: model.currentSelectedItemFrame, indicatorWidth: targetWidth)
+        targetFrame.size.width = targetWidth
+        let cornerRadius = getIndicatorCornerRadius(itemFrame: model.currentSelectedItemFrame)
+        let targetPath = UIBezierPath(roundedRect: targetFrame, cornerRadius: cornerRadius)
         if canSelectedWithAnimation(model: model) {
             gradientMaskLayer.removeAnimation(forKey: "path")
             let animation = CABasicAnimation(keyPath: "path")
             animation.fromValue = gradientMaskLayer.path
-            animation.toValue = path.cgPath
+            animation.toValue = targetPath.cgPath
             animation.duration = scrollAnimationDuration
             animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
             gradientMaskLayer.add(animation, forKey: "path")
-            gradientMaskLayer.path = path.cgPath
-        }else {
-            CATransaction.begin()
-            CATransaction.setDisableActions(true)
-            gradientMaskLayer.path = path.cgPath
-            CATransaction.commit()
+            gradientMaskLayer.path = targetPath.cgPath
+        } else {
+            updateGradientMaskPath(frame: targetFrame, cornerRadius: cornerRadius, disableActions: true)
         }
+        gradientMaskFrame = targetFrame
+    }
+
+    private func updateGradientMaskPath(frame: CGRect, cornerRadius: CGFloat, disableActions: Bool) {
+        let path = UIBezierPath(roundedRect: frame, cornerRadius: cornerRadius)
+        CATransaction.begin()
+        CATransaction.setDisableActions(disableActions)
+        gradientMaskLayer.path = path.cgPath
+        CATransaction.commit()
     }
 }

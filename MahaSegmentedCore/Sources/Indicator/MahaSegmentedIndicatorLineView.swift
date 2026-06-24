@@ -30,20 +30,7 @@ open class MahaSegmentedIndicatorLineView: MahaSegmentedIndicatorBaseView {
 
         backgroundColor = indicatorColor
         layer.cornerRadius = getIndicatorCornerRadius(itemFrame: model.currentSelectedItemFrame)
-
-        let width = getIndicatorWidth(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
-        let height = getIndicatorHeight(itemFrame: model.currentSelectedItemFrame)
-        let x = model.currentSelectedItemFrame.origin.x + (model.currentSelectedItemFrame.size.width - width)/2
-        var y: CGFloat = 0
-        switch indicatorPosition {
-        case .top:
-            y = verticalOffset
-        case .bottom:
-            y = model.currentSelectedItemFrame.size.height - height - verticalOffset
-        case .center:
-            y = (model.currentSelectedItemFrame.size.height - height)/2 + verticalOffset
-        }
-        frame = CGRect(x: x, y: y, width: width, height: height)
+        frame = indicatorFrame(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
     }
 
     open override func contentScrollViewDidScroll(model: MahaSegmentedIndicatorTransitionParams) {
@@ -53,63 +40,62 @@ open class MahaSegmentedIndicatorLineView: MahaSegmentedIndicatorBaseView {
             return
         }
 
-        let rightItemFrame = model.rightItemFrame
         let leftItemFrame = model.leftItemFrame
+        let rightItemFrame = model.rightItemFrame
         let percent = model.percent
-        var targetX: CGFloat = leftItemFrame.origin.x
-        var targetWidth = getIndicatorWidth(itemFrame: leftItemFrame, itemContentWidth: model.leftItemContentWidth)
-
-        let leftWidth = targetWidth
+        let leftWidth = getIndicatorWidth(itemFrame: leftItemFrame, itemContentWidth: model.leftItemContentWidth)
         let rightWidth = getIndicatorWidth(itemFrame: rightItemFrame, itemContentWidth: model.rightItemContentWidth)
-        let leftX = leftItemFrame.origin.x + (leftItemFrame.size.width - leftWidth)/2
-        let rightX = rightItemFrame.origin.x + (rightItemFrame.size.width - rightWidth)/2
+        let leftX = centeredIndicatorX(itemFrame: leftItemFrame, indicatorWidth: leftWidth)
+        let rightX = centeredIndicatorX(itemFrame: rightItemFrame, indicatorWidth: rightWidth)
+        var targetX = leftX
+        var targetWidth = leftWidth
 
         switch lineStyle {
         case .normal:
-            targetX = MahaSegmentedViewTool.interpolate(from: leftX, to: rightX, percent: CGFloat(percent))
+            targetX = MahaSegmentedViewTool.interpolate(from: leftX, to: rightX, percent: percent)
             if indicatorWidth == MahaSegmentedViewAutomaticDimension {
-                targetWidth = MahaSegmentedViewTool.interpolate(from: leftWidth, to: rightWidth, percent: CGFloat(percent))
+                targetWidth = MahaSegmentedViewTool.interpolate(from: leftWidth, to: rightWidth, percent: percent)
             }
         case .lengthen:
             //前50%，只增加width；后50%，移动x并减小width
             let maxWidth = rightX - leftX + rightWidth
             if percent <= 0.5 {
                 targetX = leftX
-                targetWidth = MahaSegmentedViewTool.interpolate(from: leftWidth, to: maxWidth, percent: CGFloat(percent*2))
-            }else {
-                targetX = MahaSegmentedViewTool.interpolate(from: leftX, to: rightX, percent: CGFloat((percent - 0.5)*2))
-                targetWidth = MahaSegmentedViewTool.interpolate(from: maxWidth, to: rightWidth, percent: CGFloat((percent - 0.5)*2))
+                targetWidth = MahaSegmentedViewTool.interpolate(from: leftWidth, to: maxWidth, percent: percent * 2)
+            } else {
+                targetX = MahaSegmentedViewTool.interpolate(from: leftX, to: rightX, percent: (percent - 0.5) * 2)
+                targetWidth = MahaSegmentedViewTool.interpolate(from: maxWidth, to: rightWidth, percent: (percent - 0.5) * 2)
             }
         case .lengthenOffset:
             //前50%，增加width，并少量移动x；后50%，少量移动x并减小width
-            let maxWidth = rightX - leftX + rightWidth - lineScrollOffsetX*2
+            let maxWidth = rightX - leftX + rightWidth - lineScrollOffsetX * 2
             if percent <= 0.5 {
-                targetX = MahaSegmentedViewTool.interpolate(from: leftX, to: leftX + lineScrollOffsetX, percent: CGFloat(percent*2))
-                targetWidth = MahaSegmentedViewTool.interpolate(from: leftWidth, to: maxWidth, percent: CGFloat(percent*2))
-            }else {
-                targetX = MahaSegmentedViewTool.interpolate(from:leftX + lineScrollOffsetX, to: rightX, percent: CGFloat((percent - 0.5)*2))
-                targetWidth = MahaSegmentedViewTool.interpolate(from: maxWidth, to: rightWidth, percent: CGFloat((percent - 0.5)*2))
+                targetX = MahaSegmentedViewTool.interpolate(from: leftX, to: leftX + lineScrollOffsetX, percent: percent * 2)
+                targetWidth = MahaSegmentedViewTool.interpolate(from: leftWidth, to: maxWidth, percent: percent * 2)
+            } else {
+                targetX = MahaSegmentedViewTool.interpolate(from: leftX + lineScrollOffsetX, to: rightX, percent: (percent - 0.5) * 2)
+                targetWidth = MahaSegmentedViewTool.interpolate(from: maxWidth, to: rightWidth, percent: (percent - 0.5) * 2)
             }
         }
 
-        self.frame.origin.x = targetX
-        self.frame.size.width = targetWidth
+        frame.origin.x = targetX
+        frame.size.width = targetWidth
     }
 
     open override func selectItem(model: MahaSegmentedIndicatorSelectedParams) {
         super.selectItem(model: model)
 
         let targetWidth = getIndicatorWidth(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
-        var toFrame = self.frame
-        toFrame.origin.x = model.currentSelectedItemFrame.origin.x + (model.currentSelectedItemFrame.size.width - targetWidth)/2
-        toFrame.size.width = targetWidth
+        var targetFrame = frame
+        targetFrame.origin.x = centeredIndicatorX(itemFrame: model.currentSelectedItemFrame, indicatorWidth: targetWidth)
+        targetFrame.size.width = targetWidth
         if canSelectedWithAnimation(model: model) {
             UIView.animate(withDuration: scrollAnimationDuration, delay: 0, options: .curveEaseOut, animations: {
-                self.frame = toFrame
+                self.frame = targetFrame
             }) { (_) in
             }
-        }else {
-            frame = toFrame
+        } else {
+            frame = targetFrame
         }
     }
 

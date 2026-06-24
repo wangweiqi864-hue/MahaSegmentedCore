@@ -13,7 +13,7 @@ open class MahaSegmentedTitleImageItemModel: MahaSegmentedTitleItemModel {
     open var normalImageInfo: String?
     open var selectedImageInfo: String?
     open var loadImageClosure: MahaSegmentedLoadImageClosure?
-    open var imageSize: CGSize = CGSize.zero
+    open var imageSize: CGSize = .zero
     open var titleImageSpacing: CGFloat = 0
     open var isImageZoomEnabled: Bool = false
     open var imageNormalZoomScale: CGFloat = 0

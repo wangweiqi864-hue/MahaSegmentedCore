@@ -28,73 +28,83 @@ open class MahaSegmentedTitleImageCell: MahaSegmentedTitleCell {
     open override func layoutSubviews() {
         super.layoutSubviews()
 
-        guard let myItemModel = itemModel as? MahaSegmentedTitleImageItemModel else {
+        guard let titleImageItemModel = itemModel as? MahaSegmentedTitleImageItemModel else {
             return
         }
 
-        let imageSize = myItemModel.imageSize
-        switch myItemModel.titleImageType {
-            case .topImage:
-                let contentHeight = imageSize.height + myItemModel.titleImageSpacing + titleLabel.bounds.size.height
-                imageView.center = CGPoint(x: contentView.bounds.size.width/2, y: (contentView.bounds.size.height - contentHeight)/2 + imageSize.height/2)
-                titleLabel.center = CGPoint(x: contentView.bounds.size.width/2, y: imageView.frame.maxY + myItemModel.titleImageSpacing + titleLabel.bounds.size.height/2)
-            case .leftImage:
-                let contentWidth = imageSize.width + myItemModel.titleImageSpacing + titleLabel.bounds.size.width
-                imageView.center = CGPoint(x: (contentView.bounds.size.width - contentWidth)/2 + imageSize.width/2, y: contentView.bounds.size.height/2)
-                titleLabel.center = CGPoint(x: imageView.frame.maxX + myItemModel.titleImageSpacing + titleLabel.bounds.size.width/2, y: contentView.bounds.size.height/2)
-            case .bottomImage:
-                let contentHeight = imageSize.height + myItemModel.titleImageSpacing + titleLabel.bounds.size.height
-                titleLabel.center = CGPoint(x: contentView.bounds.size.width/2, y: (contentView.bounds.size.height - contentHeight)/2 + titleLabel.bounds.size.height/2)
-                imageView.center = CGPoint(x: contentView.bounds.size.width/2, y: titleLabel.frame.maxY + myItemModel.titleImageSpacing + imageSize.height/2)
-            case .rightImage:
-                let contentWidth = imageSize.width + myItemModel.titleImageSpacing + titleLabel.bounds.size.width
-                titleLabel.center = CGPoint(x: (contentView.bounds.size.width - contentWidth)/2 + titleLabel.bounds.size.width/2, y: contentView.bounds.size.height/2)
-                imageView.center = CGPoint(x: titleLabel.frame.maxX + myItemModel.titleImageSpacing + imageSize.width/2, y: contentView.bounds.size.height/2)
-            case .onlyImage:
-                imageView.center = CGPoint(x: contentView.bounds.size.width/2, y: contentView.bounds.size.height/2)
-            case .onlyTitle:
-                titleLabel.center = CGPoint(x: contentView.bounds.size.width/2, y: contentView.bounds.size.height/2)
-        }
+        layoutContent(using: titleImageItemModel)
     }
 
     open override func reloadData(itemModel: MahaSegmentedBaseItemModel, selectedType: MahaSegmentedViewItemSelectedType) {
         super.reloadData(itemModel: itemModel, selectedType: selectedType )
 
-        guard let myItemModel = itemModel as? MahaSegmentedTitleImageItemModel else {
+        guard let titleImageItemModel = itemModel as? MahaSegmentedTitleImageItemModel else {
             return
         }
 
-        titleLabel.isHidden = false
-        imageView.isHidden = false
-        if myItemModel.titleImageType == .onlyTitle {
-            imageView.isHidden = true
-        }else if myItemModel.titleImageType == .onlyImage {
-            titleLabel.isHidden = true
+        updateHiddenState(using: titleImageItemModel)
+        imageView.bounds = CGRect(origin: .zero, size: titleImageItemModel.imageSize)
+        loadImageIfNeeded(using: titleImageItemModel)
+        updateImageTransform(using: titleImageItemModel)
+        setNeedsLayout()
+    }
+
+    private func layoutContent(using itemModel: MahaSegmentedTitleImageItemModel) {
+        let imageSize = itemModel.imageSize
+        switch itemModel.titleImageType {
+        case .topImage:
+            let contentHeight = imageSize.height + itemModel.titleImageSpacing + titleLabel.bounds.size.height
+            imageView.center = CGPoint(x: contentView.bounds.size.width / 2, y: (contentView.bounds.size.height - contentHeight) / 2 + imageSize.height / 2)
+            titleLabel.center = CGPoint(x: contentView.bounds.size.width / 2, y: imageView.frame.maxY + itemModel.titleImageSpacing + titleLabel.bounds.size.height / 2)
+        case .leftImage:
+            let contentWidth = imageSize.width + itemModel.titleImageSpacing + titleLabel.bounds.size.width
+            imageView.center = CGPoint(x: (contentView.bounds.size.width - contentWidth) / 2 + imageSize.width / 2, y: contentView.bounds.size.height / 2)
+            titleLabel.center = CGPoint(x: imageView.frame.maxX + itemModel.titleImageSpacing + titleLabel.bounds.size.width / 2, y: contentView.bounds.size.height / 2)
+        case .bottomImage:
+            let contentHeight = imageSize.height + itemModel.titleImageSpacing + titleLabel.bounds.size.height
+            titleLabel.center = CGPoint(x: contentView.bounds.size.width / 2, y: (contentView.bounds.size.height - contentHeight) / 2 + titleLabel.bounds.size.height / 2)
+            imageView.center = CGPoint(x: contentView.bounds.size.width / 2, y: titleLabel.frame.maxY + itemModel.titleImageSpacing + imageSize.height / 2)
+        case .rightImage:
+            let contentWidth = imageSize.width + itemModel.titleImageSpacing + titleLabel.bounds.size.width
+            titleLabel.center = CGPoint(x: (contentView.bounds.size.width - contentWidth) / 2 + titleLabel.bounds.size.width / 2, y: contentView.bounds.size.height / 2)
+            imageView.center = CGPoint(x: titleLabel.frame.maxX + itemModel.titleImageSpacing + imageSize.width / 2, y: contentView.bounds.size.height / 2)
+        case .onlyImage:
+            imageView.center = CGPoint(x: contentView.bounds.size.width / 2, y: contentView.bounds.size.height / 2)
+        case .onlyTitle:
+            titleLabel.center = CGPoint(x: contentView.bounds.size.width / 2, y: contentView.bounds.size.height / 2)
         }
+    }
 
-        imageView.bounds = CGRect(x: 0, y: 0, width: myItemModel.imageSize.width, height: myItemModel.imageSize.height)
+    private func updateHiddenState(using itemModel: MahaSegmentedTitleImageItemModel) {
+        titleLabel.isHidden = itemModel.titleImageType == .onlyImage
+        imageView.isHidden = itemModel.titleImageType == .onlyTitle
+    }
 
-        var normalImageInfo = myItemModel.normalImageInfo
-        if myItemModel.isSelected && myItemModel.selectedImageInfo != nil {
-            normalImageInfo = myItemModel.selectedImageInfo
+    private func loadImageIfNeeded(using itemModel: MahaSegmentedTitleImageItemModel) {
+        let targetImageInfo = resolvedImageInfo(using: itemModel)
+        guard let targetImageInfo, targetImageInfo != currentImageInfo else {
+            return
         }
-
-        //因为`func reloadData(itemModel: MahaSegmentedBaseItemModel, selectedType: MahaSegmentedViewItemSelectedType)`方法会回调多次，尤其是左右滚动的时候会调用无数次。如果每次都触发图片加载，会非常消耗性能。所以只会在图片发生了变化的时候，才进行图片加载。
-        if normalImageInfo != nil && normalImageInfo != currentImageInfo {
-            currentImageInfo = normalImageInfo
-            if myItemModel.loadImageClosure != nil {
-                myItemModel.loadImageClosure!(imageView, normalImageInfo!)
-            }else {
-                imageView.image = UIImage(named: normalImageInfo!)
-            }
+        currentImageInfo = targetImageInfo
+        if let loadImageClosure = itemModel.loadImageClosure {
+            loadImageClosure(imageView, targetImageInfo)
+        } else {
+            imageView.image = UIImage(named: targetImageInfo)
         }
+    }
 
-        if myItemModel.isImageZoomEnabled {
-            imageView.transform = CGAffineTransform(scaleX: myItemModel.imageCurrentZoomScale, y: myItemModel.imageCurrentZoomScale)
-        }else {
+    private func resolvedImageInfo(using itemModel: MahaSegmentedTitleImageItemModel) -> String? {
+        if itemModel.isSelected, let selectedImageInfo = itemModel.selectedImageInfo {
+            return selectedImageInfo
+        }
+        return itemModel.normalImageInfo
+    }
+
+    private func updateImageTransform(using itemModel: MahaSegmentedTitleImageItemModel) {
+        if itemModel.isImageZoomEnabled {
+            imageView.transform = CGAffineTransform(scaleX: itemModel.imageCurrentZoomScale, y: itemModel.imageCurrentZoomScale)
+        } else {
             imageView.transform = .identity
         }
-
-        setNeedsLayout()
     }
 }

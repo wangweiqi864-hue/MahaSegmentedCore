@@ -25,19 +25,12 @@ open class MahaSegmentedTitleGradientDataSource: MahaSegmentedTitleDataSource {
     open override func preferredRefreshItemModel(_ itemModel: MahaSegmentedBaseItemModel, at index: Int, selectedIndex: Int) {
         super.preferredRefreshItemModel(itemModel, at: index, selectedIndex: selectedIndex)
 
-        guard let itemModel = itemModel as? MahaSegmentedTitleGradientItemModel else {
+        guard let gradientItemModel = itemModel as? MahaSegmentedTitleGradientItemModel else {
             return
         }
 
-        itemModel.titleGradientStartPoint = titleGradientStartPoint
-        itemModel.titleGradientEndPoint = titleGradientEndPoint
-        itemModel.titleNormalGradientColors = titleNormalGradientColors
-        itemModel.titleSelectedGradientColors = titleSelectedGradientColors
-        if index == selectedIndex {
-            itemModel.titleCurrentGradientColors = itemModel.titleSelectedGradientColors
-        }else {
-            itemModel.titleCurrentGradientColors = itemModel.titleNormalGradientColors
-        }
+        configureGradientItemModel(gradientItemModel)
+        gradientItemModel.titleCurrentGradientColors = index == selectedIndex ? gradientItemModel.titleSelectedGradientColors : gradientItemModel.titleNormalGradientColors
     }
 
     //MARK: - MahaSegmentedViewDataSource
@@ -46,8 +39,7 @@ open class MahaSegmentedTitleGradientDataSource: MahaSegmentedTitleDataSource {
     }
 
     open override func segmentedView(_ segmentedView: MahaSegmentedView, cellForItemAt index: Int) -> MahaSegmentedBaseCell {
-        let cell = segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
-        return cell
+        return segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
     }
 
     open override func refreshItemModel(_ segmentedView: MahaSegmentedView, leftItemModel: MahaSegmentedBaseItemModel, rightItemModel: MahaSegmentedBaseItemModel, percent: CGFloat) {
@@ -66,11 +58,19 @@ open class MahaSegmentedTitleGradientDataSource: MahaSegmentedTitleDataSource {
     open override func refreshItemModel(_ segmentedView: MahaSegmentedView, currentSelectedItemModel: MahaSegmentedBaseItemModel, willSelectedItemModel: MahaSegmentedBaseItemModel, selectedType: MahaSegmentedViewItemSelectedType) {
         super.refreshItemModel(segmentedView, currentSelectedItemModel: currentSelectedItemModel, willSelectedItemModel: willSelectedItemModel, selectedType: selectedType)
 
-        guard let myCurrentSelectedItemModel = currentSelectedItemModel as? MahaSegmentedTitleGradientItemModel, let myWillSelectedItemModel = willSelectedItemModel as? MahaSegmentedTitleGradientItemModel else {
+        guard let currentGradientItemModel = currentSelectedItemModel as? MahaSegmentedTitleGradientItemModel,
+              let nextGradientItemModel = willSelectedItemModel as? MahaSegmentedTitleGradientItemModel else {
             return
         }
 
-        myCurrentSelectedItemModel.titleCurrentGradientColors = myCurrentSelectedItemModel.titleNormalGradientColors
-        myWillSelectedItemModel.titleCurrentGradientColors = myWillSelectedItemModel.titleSelectedGradientColors
+        currentGradientItemModel.titleCurrentGradientColors = currentGradientItemModel.titleNormalGradientColors
+        nextGradientItemModel.titleCurrentGradientColors = nextGradientItemModel.titleSelectedGradientColors
+    }
+
+    private func configureGradientItemModel(_ itemModel: MahaSegmentedTitleGradientItemModel) {
+        itemModel.titleGradientStartPoint = titleGradientStartPoint
+        itemModel.titleGradientEndPoint = titleGradientEndPoint
+        itemModel.titleNormalGradientColors = titleNormalGradientColors
+        itemModel.titleSelectedGradientColors = titleSelectedGradientColors
     }
 }

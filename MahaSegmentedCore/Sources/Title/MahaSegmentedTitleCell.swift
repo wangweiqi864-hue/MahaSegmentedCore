@@ -46,138 +46,35 @@ open class MahaSegmentedTitleCell: MahaSegmentedBaseCell {
     open override func reloadData(itemModel: MahaSegmentedBaseItemModel, selectedType: MahaSegmentedViewItemSelectedType) {
         super.reloadData(itemModel: itemModel, selectedType: selectedType )
 
-        guard let myItemModel = itemModel as? MahaSegmentedTitleItemModel else {
+        guard let titleItemModel = itemModel as? MahaSegmentedTitleItemModel else {
             return
         }
 
-        titleLabel.numberOfLines = myItemModel.titleNumberOfLines
-        maskTitleLabel.numberOfLines = myItemModel.titleNumberOfLines
-
-        if myItemModel.isTitleZoomEnabled {
-            //先把font设置为缩放的最大值，再缩小到最小值，最后根据当前的titleCurrentZoomScale值，进行缩放更新。这样就能避免transform从小到大时字体模糊
-            let maxScaleFont = UIFont(descriptor: myItemModel.titleNormalFont.fontDescriptor, size: myItemModel.titleNormalFont.pointSize*CGFloat(myItemModel.titleSelectedZoomScale))
-            let baseScale = myItemModel.titleNormalFont.lineHeight/maxScaleFont.lineHeight
-
-            if myItemModel.isSelectedAnimable && canStartSelectedAnimation(itemModel: itemModel, selectedType: selectedType) {
-                //允许动画且当前是点击的
-                let titleZoomClosure = preferredTitleZoomAnimateClosure(itemModel: myItemModel, baseScale: baseScale)
-                appendSelectedAnimationClosure(closure: titleZoomClosure)
-            }else {
-                titleLabel.font = maxScaleFont
-                maskTitleLabel.font = maxScaleFont
-                let currentTransform = CGAffineTransform(scaleX: baseScale*CGFloat(myItemModel.titleCurrentZoomScale), y: baseScale*CGFloat(myItemModel.titleCurrentZoomScale))
-                titleLabel.transform = currentTransform
-                maskTitleLabel.transform = currentTransform
-            }
-        }else {
-            if myItemModel.isSelected {
-                titleLabel.font = myItemModel.titleSelectedFont
-                maskTitleLabel.font = myItemModel.titleSelectedFont
-            }else {
-                titleLabel.font = myItemModel.titleNormalFont
-                maskTitleLabel.font = myItemModel.titleNormalFont
-            }
-        }
-
-        let title = myItemModel.title ?? ""
-        let attriText = NSMutableAttributedString(string: title)
-        if myItemModel.isTitleStrokeWidthEnabled {
-            if myItemModel.isSelectedAnimable && canStartSelectedAnimation(itemModel: itemModel, selectedType: selectedType) {
-                //允许动画且当前是点击的
-                let titleStrokeWidthClosure = preferredTitleStrokeWidthAnimateClosure(itemModel: myItemModel, attriText: attriText)
-                appendSelectedAnimationClosure(closure: titleStrokeWidthClosure)
-            }else {
-                attriText.addAttributes([NSAttributedString.Key.strokeWidth: myItemModel.titleCurrentStrokeWidth], range: NSRange(location: 0, length: title.count))
-                titleLabel.attributedText = attriText
-                maskTitleLabel.attributedText = attriText
-            }
-        }else {
-            titleLabel.attributedText = attriText
-            maskTitleLabel.attributedText = attriText
-        }
-
-        if myItemModel.isTitleMaskEnabled {
-            //允许mask，maskTitleLabel在titleLabel上面，maskTitleLabel设置为titleSelectedColor。titleLabel设置为titleNormalColor
-            //为了显示效果，使用了双遮罩。即titleMaskLayer遮罩titleLabel，maskTitleMaskLayer遮罩maskTitleLabel
-            maskTitleLabel.isHidden = false
-            titleLabel.textColor = myItemModel.titleNormalColor
-            maskTitleLabel.textColor = myItemModel.titleSelectedColor
-            let labelSize = maskTitleLabel.sizeThatFits(self.contentView.bounds.size)
-            let labelBounds = CGRect(x: 0, y: 0, width: labelSize.width, height: labelSize.height)
-            maskTitleLabel.bounds = labelBounds
-
-            var topMaskFrame = myItemModel.indicatorConvertToItemFrame
-            topMaskFrame.origin.y = 0
-            var bottomMaskFrame = topMaskFrame
-            var maskStartX: CGFloat = 0
-            if maskTitleLabel.bounds.size.width >= bounds.size.width {
-                topMaskFrame.origin.x -= (maskTitleLabel.bounds.size.width - bounds.size.width)/2
-                bottomMaskFrame.size.width = maskTitleLabel.bounds.size.width
-                maskStartX = -(maskTitleLabel.bounds.size.width - bounds.size.width)/2
-            }else {
-                topMaskFrame.origin.x -= (bounds.size.width - maskTitleLabel.bounds.size.width)/2
-                bottomMaskFrame.size.width = bounds.size.width
-                maskStartX = 0
-            }
-            bottomMaskFrame.origin.x = topMaskFrame.origin.x
-            if topMaskFrame.origin.x > maskStartX {
-                bottomMaskFrame.origin.x = topMaskFrame.origin.x - bottomMaskFrame.size.width
-            }else {
-                bottomMaskFrame.origin.x = topMaskFrame.maxX
-            }
-
-            CATransaction.begin()
-            CATransaction.setDisableActions(true)
-            if topMaskFrame.size.width > 0 && topMaskFrame.intersects(maskTitleLabel.frame) {
-                titleLabel.layer.mask = titleMaskLayer
-                titleMaskLayer.frame = bottomMaskFrame
-                maskTitleMaskLayer.frame = topMaskFrame
-            }else {
-                titleLabel.layer.mask = nil
-                maskTitleMaskLayer.frame = topMaskFrame
-            }
-            CATransaction.commit()
-        }else {
-            maskTitleLabel.isHidden = true
-            titleLabel.layer.mask = nil
-            if myItemModel.isSelectedAnimable && canStartSelectedAnimation(itemModel: itemModel, selectedType: selectedType) {
-                //允许动画且当前是点击的
-                let titleColorClosure = preferredTitleColorAnimateClosure(itemModel: myItemModel)
-                appendSelectedAnimationClosure(closure: titleColorClosure)
-            }else {
-                titleLabel.textColor = myItemModel.titleCurrentColor
-            }
-        }
-
+        applyNumberOfLines(using: titleItemModel)
+        updateTitleFont(using: titleItemModel, sourceItemModel: itemModel, selectedType: selectedType)
+        let attributedTitle = attributedTitle(for: titleItemModel)
+        updateAttributedTitle(attributedTitle, using: titleItemModel, sourceItemModel: itemModel, selectedType: selectedType)
+        updateMaskState(using: titleItemModel, sourceItemModel: itemModel, selectedType: selectedType)
         startSelectedAnimationIfNeeded(itemModel: itemModel, selectedType: selectedType)
-
         setNeedsLayout()
     }
 
     open func preferredTitleZoomAnimateClosure(itemModel: MahaSegmentedTitleItemModel, baseScale: CGFloat) -> MahaSegmentedCellSelectedAnimationClosure {
-        return {[weak self] (percnet) in
-            if itemModel.isSelected {
-                //将要选中，scale从小到大插值渐变
-                itemModel.titleCurrentZoomScale = MahaSegmentedViewTool.interpolate(from: itemModel.titleNormalZoomScale, to: itemModel.titleSelectedZoomScale, percent: percnet)
-            }else {
-                //将要取消选中，scale从大到小插值渐变
-                itemModel.titleCurrentZoomScale = MahaSegmentedViewTool.interpolate(from: itemModel.titleSelectedZoomScale, to:itemModel.titleNormalZoomScale , percent: percnet)
-            }
-            let currentTransform = CGAffineTransform(scaleX: baseScale*itemModel.titleCurrentZoomScale, y: baseScale*itemModel.titleCurrentZoomScale)
+        return { [weak self] percent in
+            itemModel.titleCurrentZoomScale = itemModel.isSelected
+                ? MahaSegmentedViewTool.interpolate(from: itemModel.titleNormalZoomScale, to: itemModel.titleSelectedZoomScale, percent: percent)
+                : MahaSegmentedViewTool.interpolate(from: itemModel.titleSelectedZoomScale, to: itemModel.titleNormalZoomScale, percent: percent)
+            let currentTransform = CGAffineTransform(scaleX: baseScale * itemModel.titleCurrentZoomScale, y: baseScale * itemModel.titleCurrentZoomScale)
             self?.titleLabel.transform = currentTransform
             self?.maskTitleLabel.transform = currentTransform
         }
     }
 
     open func preferredTitleStrokeWidthAnimateClosure(itemModel: MahaSegmentedTitleItemModel, attriText: NSMutableAttributedString) -> MahaSegmentedCellSelectedAnimationClosure{
-        return {[weak self] (percent) in
-            if itemModel.isSelected {
-                //将要选中，StrokeWidth从小到大插值渐变
-                itemModel.titleCurrentStrokeWidth = MahaSegmentedViewTool.interpolate(from: itemModel.titleNormalStrokeWidth, to: itemModel.titleSelectedStrokeWidth, percent: percent)
-            }else {
-                //将要取消选中，StrokeWidth从大到小插值渐变
-                itemModel.titleCurrentStrokeWidth = MahaSegmentedViewTool.interpolate(from: itemModel.titleSelectedStrokeWidth, to:itemModel.titleNormalStrokeWidth , percent: percent)
-            }
+        return { [weak self] percent in
+            itemModel.titleCurrentStrokeWidth = itemModel.isSelected
+                ? MahaSegmentedViewTool.interpolate(from: itemModel.titleNormalStrokeWidth, to: itemModel.titleSelectedStrokeWidth, percent: percent)
+                : MahaSegmentedViewTool.interpolate(from: itemModel.titleSelectedStrokeWidth, to: itemModel.titleNormalStrokeWidth, percent: percent)
             attriText.addAttributes([NSAttributedString.Key.strokeWidth: itemModel.titleCurrentStrokeWidth], range: NSRange(location: 0, length: attriText.string.count))
             self?.titleLabel.attributedText = attriText
             self?.maskTitleLabel.attributedText = attriText
@@ -185,14 +82,10 @@ open class MahaSegmentedTitleCell: MahaSegmentedBaseCell {
     }
 
     open func preferredTitleColorAnimateClosure(itemModel: MahaSegmentedTitleItemModel) -> MahaSegmentedCellSelectedAnimationClosure {
-        return {[weak self] (percent) in
-            if itemModel.isSelected {
-                //将要选中，textColor从titleNormalColor到titleSelectedColor插值渐变
-                itemModel.titleCurrentColor = MahaSegmentedViewTool.interpolateThemeColor(from: itemModel.titleNormalColor, to: itemModel.titleSelectedColor, percent: percent)
-            }else {
-                //将要取消选中，textColor从titleSelectedColor到titleNormalColor插值渐变
-                itemModel.titleCurrentColor = MahaSegmentedViewTool.interpolateThemeColor(from: itemModel.titleSelectedColor, to: itemModel.titleNormalColor, percent: percent)
-            }
+        return { [weak self] percent in
+            itemModel.titleCurrentColor = itemModel.isSelected
+                ? MahaSegmentedViewTool.interpolateThemeColor(from: itemModel.titleNormalColor, to: itemModel.titleSelectedColor, percent: percent)
+                : MahaSegmentedViewTool.interpolateThemeColor(from: itemModel.titleSelectedColor, to: itemModel.titleNormalColor, percent: percent)
             self?.titleLabel.textColor = itemModel.titleCurrentColor
         }
     }
@@ -203,5 +96,115 @@ open class MahaSegmentedTitleCell: MahaSegmentedBaseCell {
         } else {
             self.titleLabel.textColor = (self.itemModel as? MahaSegmentedTitleItemModel)?.titleNormalColor
         }
+    }
+
+    private func applyNumberOfLines(using itemModel: MahaSegmentedTitleItemModel) {
+        titleLabel.numberOfLines = itemModel.titleNumberOfLines
+        maskTitleLabel.numberOfLines = itemModel.titleNumberOfLines
+    }
+
+    private func updateTitleFont(using itemModel: MahaSegmentedTitleItemModel,
+                                 sourceItemModel: MahaSegmentedBaseItemModel,
+                                 selectedType: MahaSegmentedViewItemSelectedType) {
+        guard itemModel.isTitleZoomEnabled else {
+            let font = itemModel.isSelected ? itemModel.titleSelectedFont : itemModel.titleNormalFont
+            titleLabel.font = font
+            maskTitleLabel.font = font
+            titleLabel.transform = .identity
+            maskTitleLabel.transform = .identity
+            return
+        }
+
+        let maxScaleFont = UIFont(
+            descriptor: itemModel.titleNormalFont.fontDescriptor,
+            size: itemModel.titleNormalFont.pointSize * itemModel.titleSelectedZoomScale
+        )
+        let baseScale = itemModel.titleNormalFont.lineHeight / maxScaleFont.lineHeight
+        if itemModel.isSelectedAnimable && canStartSelectedAnimation(itemModel: sourceItemModel, selectedType: selectedType) {
+            appendSelectedAnimationClosure(closure: preferredTitleZoomAnimateClosure(itemModel: itemModel, baseScale: baseScale))
+            return
+        }
+
+        titleLabel.font = maxScaleFont
+        maskTitleLabel.font = maxScaleFont
+        let currentTransform = CGAffineTransform(scaleX: baseScale * itemModel.titleCurrentZoomScale, y: baseScale * itemModel.titleCurrentZoomScale)
+        titleLabel.transform = currentTransform
+        maskTitleLabel.transform = currentTransform
+    }
+
+    private func attributedTitle(for itemModel: MahaSegmentedTitleItemModel) -> NSMutableAttributedString {
+        return NSMutableAttributedString(string: itemModel.title ?? "")
+    }
+
+    private func updateAttributedTitle(_ attributedTitle: NSMutableAttributedString,
+                                       using itemModel: MahaSegmentedTitleItemModel,
+                                       sourceItemModel: MahaSegmentedBaseItemModel,
+                                       selectedType: MahaSegmentedViewItemSelectedType) {
+        guard itemModel.isTitleStrokeWidthEnabled else {
+            titleLabel.attributedText = attributedTitle
+            maskTitleLabel.attributedText = attributedTitle
+            return
+        }
+
+        if itemModel.isSelectedAnimable && canStartSelectedAnimation(itemModel: sourceItemModel, selectedType: selectedType) {
+            appendSelectedAnimationClosure(closure: preferredTitleStrokeWidthAnimateClosure(itemModel: itemModel, attriText: attributedTitle))
+            return
+        }
+
+        attributedTitle.addAttributes([.strokeWidth: itemModel.titleCurrentStrokeWidth], range: NSRange(location: 0, length: attributedTitle.string.count))
+        titleLabel.attributedText = attributedTitle
+        maskTitleLabel.attributedText = attributedTitle
+    }
+
+    private func updateMaskState(using itemModel: MahaSegmentedTitleItemModel,
+                                 sourceItemModel: MahaSegmentedBaseItemModel,
+                                 selectedType: MahaSegmentedViewItemSelectedType) {
+        guard itemModel.isTitleMaskEnabled else {
+            maskTitleLabel.isHidden = true
+            titleLabel.layer.mask = nil
+            if itemModel.isSelectedAnimable && canStartSelectedAnimation(itemModel: sourceItemModel, selectedType: selectedType) {
+                appendSelectedAnimationClosure(closure: preferredTitleColorAnimateClosure(itemModel: itemModel))
+            } else {
+                titleLabel.textColor = itemModel.titleCurrentColor
+            }
+            return
+        }
+
+        maskTitleLabel.isHidden = false
+        titleLabel.textColor = itemModel.titleNormalColor
+        maskTitleLabel.textColor = itemModel.titleSelectedColor
+        let labelSize = maskTitleLabel.sizeThatFits(contentView.bounds.size)
+        maskTitleLabel.bounds = CGRect(origin: .zero, size: labelSize)
+
+        let maskFrames = maskFrames(for: itemModel)
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        if maskFrames.top.size.width > 0 && maskFrames.top.intersects(maskTitleLabel.frame) {
+            titleLabel.layer.mask = titleMaskLayer
+            titleMaskLayer.frame = maskFrames.bottom
+            maskTitleMaskLayer.frame = maskFrames.top
+        } else {
+            titleLabel.layer.mask = nil
+            maskTitleMaskLayer.frame = maskFrames.top
+        }
+        CATransaction.commit()
+    }
+
+    private func maskFrames(for itemModel: MahaSegmentedTitleItemModel) -> (top: CGRect, bottom: CGRect) {
+        var topMaskFrame = itemModel.indicatorConvertToItemFrame
+        topMaskFrame.origin.y = 0
+        var bottomMaskFrame = topMaskFrame
+        let maskStartX: CGFloat
+        if maskTitleLabel.bounds.size.width >= bounds.size.width {
+            topMaskFrame.origin.x -= (maskTitleLabel.bounds.size.width - bounds.size.width) / 2
+            bottomMaskFrame.size.width = maskTitleLabel.bounds.size.width
+            maskStartX = -(maskTitleLabel.bounds.size.width - bounds.size.width) / 2
+        } else {
+            topMaskFrame.origin.x -= (bounds.size.width - maskTitleLabel.bounds.size.width) / 2
+            bottomMaskFrame.size.width = bounds.size.width
+            maskStartX = 0
+        }
+        bottomMaskFrame.origin.x = topMaskFrame.origin.x > maskStartX ? topMaskFrame.origin.x - bottomMaskFrame.size.width : topMaskFrame.maxX
+        return (topMaskFrame, bottomMaskFrame)
     }
 }

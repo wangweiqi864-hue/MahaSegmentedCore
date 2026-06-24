@@ -27,20 +27,7 @@ open class MahaSegmentedIndicatorImageView: MahaSegmentedIndicatorBaseView {
         super.refreshIndicatorState(model: model)
 
         backgroundColor = nil
-
-        let width = getIndicatorWidth(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
-        let height = getIndicatorHeight(itemFrame: model.currentSelectedItemFrame)
-        let x = model.currentSelectedItemFrame.origin.x + (model.currentSelectedItemFrame.size.width - width)/2
-        var y: CGFloat = 0
-        switch indicatorPosition {
-        case .top:
-            y = verticalOffset
-        case .bottom:
-            y = model.currentSelectedItemFrame.size.height - height - verticalOffset
-        case .center:
-            y = (model.currentSelectedItemFrame.size.height - height)/2 + verticalOffset
-        }
-        frame = CGRect(x: x, y: y, width: width, height: height)
+        frame = indicatorFrame(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
     }
 
     open override func contentScrollViewDidScroll(model: MahaSegmentedIndicatorTransitionParams) {
@@ -50,31 +37,30 @@ open class MahaSegmentedIndicatorImageView: MahaSegmentedIndicatorBaseView {
             return
         }
 
-        let rightItemFrame = model.rightItemFrame
         let leftItemFrame = model.leftItemFrame
+        let rightItemFrame = model.rightItemFrame
         let percent = model.percent
         let targetWidth = getIndicatorWidth(itemFrame: model.leftItemFrame, itemContentWidth: model.leftItemContentWidth)
-
-        let leftX = leftItemFrame.origin.x + (leftItemFrame.size.width - targetWidth)/2
-        let rightX = rightItemFrame.origin.x + (rightItemFrame.size.width - targetWidth)/2
-        let targetX = MahaSegmentedViewTool.interpolate(from: leftX, to: rightX, percent: CGFloat(percent))
+        let leftX = centeredIndicatorX(itemFrame: leftItemFrame, indicatorWidth: targetWidth)
+        let rightX = centeredIndicatorX(itemFrame: rightItemFrame, indicatorWidth: targetWidth)
+        let targetX = MahaSegmentedViewTool.interpolate(from: leftX, to: rightX, percent: percent)
         
-        self.frame.origin.x = targetX
+        frame.origin.x = targetX
     }
 
     open override func selectItem(model: MahaSegmentedIndicatorSelectedParams) {
         super.selectItem(model: model)
 
         let targetWidth = getIndicatorWidth(itemFrame: model.currentSelectedItemFrame, itemContentWidth: model.currentItemContentWidth)
-        var toFrame = self.frame
-        toFrame.origin.x = model.currentSelectedItemFrame.origin.x + (model.currentSelectedItemFrame.size.width - targetWidth)/2
+        var targetFrame = frame
+        targetFrame.origin.x = centeredIndicatorX(itemFrame: model.currentSelectedItemFrame, indicatorWidth: targetWidth)
         if canSelectedWithAnimation(model: model) {
             UIView.animate(withDuration: scrollAnimationDuration, delay: 0, options: .curveEaseOut, animations: {
-                self.frame = toFrame
+                self.frame = targetFrame
             }) { (_) in
             }
-        }else {
-            frame = toFrame
+        } else {
+            frame = targetFrame
         }
     }
 

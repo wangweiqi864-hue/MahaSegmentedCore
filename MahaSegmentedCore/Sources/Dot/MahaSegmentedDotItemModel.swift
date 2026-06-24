@@ -9,9 +9,9 @@
 import UIKit
 
 open class MahaSegmentedDotItemModel: MahaSegmentedTitleItemModel {
-    open var dotState = false
-    open var dotSize = CGSize.zero
+    open var dotState: Bool = false
+    open var dotSize: CGSize = .zero
     open var dotCornerRadius: CGFloat = 0
-    open var dotColor = UIColor.red
-    open var dotOffset: CGPoint = CGPoint.zero
+    open var dotColor: UIColor = .red
+    open var dotOffset: CGPoint = .zero
 }

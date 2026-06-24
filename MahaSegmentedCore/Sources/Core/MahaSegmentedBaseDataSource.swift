@@ -40,10 +40,10 @@ open class MahaSegmentedBaseDataSource: MahaSegmentedViewDataSource {
         }
     }
 
-    private var animator: MahaSegmentedAnimator?
+    private var selectionAnimator: MahaSegmentedAnimator?
 
     deinit {
-        animator?.stop()
+        selectionAnimator?.stop()
     }
 
     public init() {
@@ -53,7 +53,7 @@ open class MahaSegmentedBaseDataSource: MahaSegmentedViewDataSource {
     ///
     /// - Parameter selectedIndex: 当前选中的index
     open func reloadData(selectedIndex: Int) {
-        dataSource.removeAll()
+        dataSource.removeAll(keepingCapacity: true)
         for index in 0..<preferredItemCount() {
             let itemModel = preferredItemModelInstance()
             preferredRefreshItemModel(itemModel, at: index, selectedIndex: selectedIndex)
@@ -77,17 +77,11 @@ open class MahaSegmentedBaseDataSource: MahaSegmentedViewDataSource {
 
     /// 子类需要重载该方法，用于更新索引为index的itemModel
     open func preferredRefreshItemModel(_ itemModel: MahaSegmentedBaseItemModel, at index: Int, selectedIndex: Int) {
-        itemModel.index = index
-        itemModel.isItemTransitionEnabled = isItemTransitionEnabled
-        itemModel.isSelectedAnimable = isSelectedAnimable
-        itemModel.selectedAnimationDuration = selectedAnimationDuration
-        itemModel.isItemWidthZoomEnabled = isItemWidthZoomEnabled
-        itemModel.itemWidthNormalZoomScale = 1
-        itemModel.itemWidthSelectedZoomScale = itemWidthSelectedZoomScale
+        configureBaseItemModel(itemModel, at: index)
         if index == selectedIndex {
             itemModel.isSelected = true
             itemModel.itemWidthCurrentZoomScale = itemModel.itemWidthSelectedZoomScale
-        }else {
+        } else {
             itemModel.isSelected = false
             itemModel.itemWidthCurrentZoomScale = itemModel.itemWidthNormalZoomScale
         }
@@ -119,42 +113,45 @@ open class MahaSegmentedBaseDataSource: MahaSegmentedViewDataSource {
         currentSelectedItemModel.isSelected = false
         willSelectedItemModel.isSelected = true
 
-        if isItemWidthZoomEnabled {
-            if (selectedType == .scroll && !isItemTransitionEnabled) ||
-                selectedType == .click ||
-                selectedType == .code {
-                animator = MahaSegmentedAnimator()
-                animator?.duration = selectedAnimationDuration
-                animator?.progressClosure = {[weak self] (percent) in
-                    guard let self = self else { return }
-                    currentSelectedItemModel.itemWidthCurrentZoomScale = MahaSegmentedViewTool.interpolate(from: currentSelectedItemModel.itemWidthSelectedZoomScale, to: currentSelectedItemModel.itemWidthNormalZoomScale, percent: percent)
-                    currentSelectedItemModel.itemWidth = self.itemWidthWithZoom(at: currentSelectedItemModel.index, model: currentSelectedItemModel)
-                    willSelectedItemModel.itemWidthCurrentZoomScale = MahaSegmentedViewTool.interpolate(from: willSelectedItemModel.itemWidthNormalZoomScale, to: willSelectedItemModel.itemWidthSelectedZoomScale, percent: percent)
-                    willSelectedItemModel.itemWidth = self.itemWidthWithZoom(at: willSelectedItemModel.index, model: willSelectedItemModel)
-                    segmentedView.collectionView.collectionViewLayout.invalidateLayout()
-                }
-                if isItemWidthZoomAnimable {
-                    animator?.start()
-                }else {
-                    animator?.stop()
-                }
-            }
-        }else {
+        guard isItemWidthZoomEnabled else {
             currentSelectedItemModel.itemWidthCurrentZoomScale = currentSelectedItemModel.itemWidthNormalZoomScale
             willSelectedItemModel.itemWidthCurrentZoomScale = willSelectedItemModel.itemWidthSelectedZoomScale
+            return
+        }
+
+        guard shouldHandleWidthZoomTransition(for: selectedType) else {
+            return
+        }
+
+        selectionAnimator?.stop()
+        let animator = MahaSegmentedAnimator()
+        animator.duration = selectedAnimationDuration
+        animator.progressClosure = { [weak self] percent in
+            self?.applyWidthZoomTransition(
+                in: segmentedView,
+                currentSelectedItemModel: currentSelectedItemModel,
+                willSelectedItemModel: willSelectedItemModel,
+                percent: percent
+            )
+        }
+        selectionAnimator = animator
+        if isItemWidthZoomAnimable {
+            animator.start()
+        } else {
+            animator.stop()
         }
     }
 
     open func refreshItemModel(_ segmentedView: MahaSegmentedView, leftItemModel: MahaSegmentedBaseItemModel, rightItemModel: MahaSegmentedBaseItemModel, percent: CGFloat) {
         //如果正在进行itemWidth缩放动画，用户又立马滚动了contentScrollView，需要停止动画。
-        animator?.stop()
-        animator = nil
+        selectionAnimator?.stop()
+        selectionAnimator = nil
         if isItemWidthZoomEnabled && isItemTransitionEnabled {
             //允许itemWidth缩放动画且允许item渐变过渡
             leftItemModel.itemWidthCurrentZoomScale = MahaSegmentedViewTool.interpolate(from: leftItemModel.itemWidthSelectedZoomScale, to: leftItemModel.itemWidthNormalZoomScale, percent: percent)
-            leftItemModel.itemWidth = itemWidthWithZoom(at: leftItemModel.index, model: leftItemModel)
+            leftItemModel.itemWidth = itemWidth(in: segmentedView, at: leftItemModel.index, model: leftItemModel)
             rightItemModel.itemWidthCurrentZoomScale = MahaSegmentedViewTool.interpolate(from: rightItemModel.itemWidthNormalZoomScale, to: rightItemModel.itemWidthSelectedZoomScale, percent: percent)
-            rightItemModel.itemWidth = itemWidthWithZoom(at: rightItemModel.index, model: rightItemModel)
+            rightItemModel.itemWidth = itemWidth(in: segmentedView, at: rightItemModel.index, model: rightItemModel)
             segmentedView.collectionView.collectionViewLayout.invalidateLayout()
         }
     }
@@ -164,8 +161,33 @@ open class MahaSegmentedBaseDataSource: MahaSegmentedViewDataSource {
         preferredRefreshItemModel(itemModel, at: index, selectedIndex: selectedIndex)
     }
 
-    private func itemWidthWithZoom(at index: Int, model: MahaSegmentedBaseItemModel) -> CGFloat {
-        var width = self.segmentedView(MahaSegmentedView(), widthForItemAt: index)
+    private func configureBaseItemModel(_ itemModel: MahaSegmentedBaseItemModel, at index: Int) {
+        itemModel.index = index
+        itemModel.isItemTransitionEnabled = isItemTransitionEnabled
+        itemModel.isSelectedAnimable = isSelectedAnimable
+        itemModel.selectedAnimationDuration = selectedAnimationDuration
+        itemModel.isItemWidthZoomEnabled = isItemWidthZoomEnabled
+        itemModel.itemWidthNormalZoomScale = 1
+        itemModel.itemWidthSelectedZoomScale = itemWidthSelectedZoomScale
+    }
+
+    private func shouldHandleWidthZoomTransition(for selectedType: MahaSegmentedViewItemSelectedType) -> Bool {
+        return (selectedType == .scroll && !isItemTransitionEnabled) || selectedType == .click || selectedType == .code
+    }
+
+    private func applyWidthZoomTransition(in segmentedView: MahaSegmentedView,
+                                          currentSelectedItemModel: MahaSegmentedBaseItemModel,
+                                          willSelectedItemModel: MahaSegmentedBaseItemModel,
+                                          percent: CGFloat) {
+        currentSelectedItemModel.itemWidthCurrentZoomScale = MahaSegmentedViewTool.interpolate(from: currentSelectedItemModel.itemWidthSelectedZoomScale, to: currentSelectedItemModel.itemWidthNormalZoomScale, percent: percent)
+        currentSelectedItemModel.itemWidth = itemWidth(in: segmentedView, at: currentSelectedItemModel.index, model: currentSelectedItemModel)
+        willSelectedItemModel.itemWidthCurrentZoomScale = MahaSegmentedViewTool.interpolate(from: willSelectedItemModel.itemWidthNormalZoomScale, to: willSelectedItemModel.itemWidthSelectedZoomScale, percent: percent)
+        willSelectedItemModel.itemWidth = itemWidth(in: segmentedView, at: willSelectedItemModel.index, model: willSelectedItemModel)
+        segmentedView.collectionView.collectionViewLayout.invalidateLayout()
+    }
+
+    private func itemWidth(in segmentedView: MahaSegmentedView, at index: Int, model: MahaSegmentedBaseItemModel) -> CGFloat {
+        var width = self.segmentedView(segmentedView, widthForItemAt: index)
         if isItemWidthZoomEnabled {
             width *= model.itemWidthCurrentZoomScale
         }

@@ -34,22 +34,18 @@ open class MahaSegmentedNumberDataSource: MahaSegmentedTitleDataSource {
     open override func preferredRefreshItemModel(_ itemModel: MahaSegmentedBaseItemModel, at index: Int, selectedIndex: Int) {
         super.preferredRefreshItemModel(itemModel, at: index, selectedIndex: selectedIndex)
 
-        guard let itemModel = itemModel as? MahaSegmentedNumberItemModel else {
+        guard let numberItemModel = itemModel as? MahaSegmentedNumberItemModel else {
             return
         }
 
-        itemModel.number = numbers[index]
-        if numberStringFormatterClosure != nil {
-            itemModel.numberString = numberStringFormatterClosure!(itemModel.number)
-        }else {
-            itemModel.numberString = "\(itemModel.number)"
-        }
-        itemModel.numberTextColor = numberTextColor
-        itemModel.numberBackgroundColor = numberBackgroundColor
-        itemModel.numberOffset = numberOffset
-        itemModel.numberWidthIncrement = numberWidthIncrement
-        itemModel.numberHeight = numberHeight
-        itemModel.numberFont = numberFont
+        numberItemModel.number = numbers[index]
+        numberItemModel.numberString = formattedNumberString(for: numberItemModel.number)
+        numberItemModel.numberTextColor = numberTextColor
+        numberItemModel.numberBackgroundColor = numberBackgroundColor
+        numberItemModel.numberOffset = numberOffset
+        numberItemModel.numberWidthIncrement = numberWidthIncrement
+        numberItemModel.numberHeight = numberHeight
+        numberItemModel.numberFont = numberFont
     }
 
     //MARK: - MahaSegmentedViewDataSource
@@ -58,7 +54,13 @@ open class MahaSegmentedNumberDataSource: MahaSegmentedTitleDataSource {
     }
 
     open override func segmentedView(_ segmentedView: MahaSegmentedView, cellForItemAt index: Int) -> MahaSegmentedBaseCell {
-        let cell = segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
-        return cell
+        return segmentedView.dequeueReusableCell(withReuseIdentifier: "cell", at: index)
+    }
+
+    private func formattedNumberString(for number: Int) -> String {
+        if let numberStringFormatterClosure {
+            return numberStringFormatterClosure(number)
+        }
+        return "\(number)"
     }
 }

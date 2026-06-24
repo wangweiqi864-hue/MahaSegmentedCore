@@ -27,14 +27,8 @@ open class MahaSegmentedIndicatorGradientLineView: MahaSegmentedIndicatorLineVie
         super.refreshIndicatorState(model: model)
 
         backgroundColor = .clear
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        gradientLayer.frame = bounds
-        gradientLayer.colors = colors.map { $0.cgColor }
-        gradientLayer.startPoint = startPoint
-        gradientLayer.endPoint = endPoint
-        gradientLayer.locations = locations
-        CATransaction.commit()
+        updateGradientLayerFrame()
+        updateGradientStyle()
     }
 
     open override func contentScrollViewDidScroll(model: MahaSegmentedIndicatorTransitionParams) {
@@ -43,10 +37,7 @@ open class MahaSegmentedIndicatorGradientLineView: MahaSegmentedIndicatorLineVie
         guard canHandleTransition(model: model) else {
             return
         }
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        gradientLayer.frame = bounds
-        CATransaction.commit()
+        updateGradientLayerFrame()
     }
 
     open override func selectItem(model: MahaSegmentedIndicatorSelectedParams) {
@@ -60,4 +51,20 @@ open class MahaSegmentedIndicatorGradientLineView: MahaSegmentedIndicatorLineVie
         CATransaction.commit()
     }
 
+    private func updateGradientLayerFrame() {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        gradientLayer.frame = bounds
+        CATransaction.commit()
+    }
+
+    private func updateGradientStyle() {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
+        gradientLayer.locations = locations
+        CATransaction.commit()
+    }
 }

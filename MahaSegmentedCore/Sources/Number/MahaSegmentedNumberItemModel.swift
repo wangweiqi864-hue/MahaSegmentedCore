@@ -16,6 +16,6 @@ open class MahaSegmentedNumberItemModel: MahaSegmentedTitleItemModel {
     open var numberTextColor: UIColor = .white
     open var numberWidthIncrement: CGFloat = 0
     open var numberFont: UIFont = UIFont.systemFont(ofSize: 11)
-    open var numberOffset: CGPoint = CGPoint.zero
+    open var numberOffset: CGPoint = .zero
     open var numberHeight: CGFloat = 14
 }
